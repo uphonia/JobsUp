@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>JobsUp</title>
+		<title>JobsUp: Log In or Sign Up</title>
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 		<link rel = "stylesheet" href = "/static/stuff.css">
 
@@ -11,6 +11,47 @@
 
 	</head>
 	<body>
-		<p>Jobs are not up</p>
-	</body>
+	    <nav class="navbar navbar-default navbar-static-top navbar-inverse navbar-fixed-top"> 
+	        <div class="container">
+	            <ul class="nav navbar-nav">
+	                <li class="home">
+		                <a href="/"><span class=""></span> JobsUp</a>
+                    </li>
+		            <li class="about">
+		                <a href="/"><span class=""></span> About Us</a>
+		            </li>
+		        </ul>
+		    </div>
+	    </nav>
+	    
+        <h1> Welcome to JobsUp, <br> an interactive map of <br> open positions in your area! </h1>
+
+    <div class="account"> 
+        <form action="/action_page.php">
+            <label for="fname"> First Name </label> <br> 
+            <input type="text" value=""><br>
+            
+            <label for="lname"> Last Name </label> <br>
+            <input type="text" value=""><br>
+            
+            <label for="email"> Email </label> <br> 
+            <input type="text" value=""><br>
+            
+            <label for="pwd"> Password </label> <br> 
+            <input type="text" value=""><br> 
+            <br>
+        </form>
+    </div>
+    
+    <div class="user">
+        <form action="/action_page.php" method="get">
+            <input type="checkbox" name="employee"> Employee <br> 
+            <input type="checkbox" name="company"> Company <br>
+        </form>
+        
+        <a href="" class="button"> Sign Up </a> 
+    </div>
+    
+    
+    </body>
 </html>
