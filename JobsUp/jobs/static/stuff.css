@@ -66,6 +66,10 @@ label {
     padding: 10px;
 }
 
+.email-login {
+    text-align: right;
+    
+}
 @media (max-width: 500px) {
   h1 {
     font-size: 50px;
