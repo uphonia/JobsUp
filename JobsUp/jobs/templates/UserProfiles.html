@@ -24,11 +24,9 @@
         }
         
         h1 {
-            text-align: center;
-            margin: 200px 200px 0 0;
-            padding: 50px;
+            text-align: left;
+            padding: 80px 200px 0 0;
         }
-        
     </style>
     
     <head>
@@ -51,16 +49,37 @@
 		            </li>
 		        </ul>
 		    </div>
-		    
 	    </nav>
 	    
-	    
-	    <h1> [Employee Name] </h1>
-	    
-        <div>
-            <a href="EditUserProfiles.html" class="button">Edit Employee Profile</a> <br/>
-            <a href="../frontpage.html" class="button">Go Back</a> <br/>
+	    <div class="container">
+            <h1>My Profile</h1>
+            <div class="panel panel-default">
+            <form action="/action_page.php" style="padding: 5px;">
+                <div class="panel-body" style="height: 450px; text-align: left;">
+                    <label for="fname"> First Name </label> <br> 
+                    <input type="text" value=""><br>
+                
+                    <label for="lname"> Last Name </label> <br>
+                    <input type="text" value=""><br>
+            
+                    <label for="email"> Email </label> <br> 
+                    <input type="text" value=""><br>
+                
+                    <label for="email"> Phone Number </label> <br> 
+                    <input type="text" value=""><br>
+                
+                    <label for="email"> Educational Degree </label> <br> 
+                    <input type="text" value=""><br>
+                    
+                    <label for="email"> Country </label> <br> 
+                    <input type="text" value=""><br>
+                    
+                    <label for="email"> Resume link </label> <br> 
+                    <input type="text" value=""><br>
+                </div>
+            </form>
         </div>
+</div>
     </body>
 
 </html>
