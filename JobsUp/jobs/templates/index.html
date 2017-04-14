@@ -11,16 +11,14 @@
 
 	</head>
 	<body>
+	    <!-- Top Navigation Bar -->
 	    <nav class="navbar navbar-default navbar-static-top navbar-inverse navbar-fixed-top"> 
 	        <div class="container">
 	            <ul class="nav navbar-nav">
 	                <li class="home">
 		                <a href="/"><span class=""></span> JobsUp</a>
                     </li>
-		            <li class="about">
-		                <a href="/"><span class=""></span> About Us</a>
-		            </li>
-		            <li class="email-login" style = "padding-top:13px; margin-left:500px;">
+		            <li class="email-login" style = "padding-top:13px; margin-left:580px;">
 		                <input type="text" placeholder="Email">
 		            </li>
 		            <li class="password-login" style="padding-top:13px; margin-left:20px;">
@@ -33,9 +31,9 @@
 		    </div>
 	    </nav>
 	    
-	    
         <h1> Welcome to JobsUp, <br> an interactive map of <br> open positions in your area! </h1>
 
+        <!-- Sign Up Form -->
         <div class="account"> 
             <form action="/action_page.php">
                 <label for="fname"> First Name </label> <br> 
@@ -59,5 +57,20 @@
             </form>
             <a href="" class="button"> Sign Up </a> 
         </div>
+        
+        <!-- Bottom Navigation Bar -->
+        <nav class="navbar navbar-default navbar-bottom navbar-inverse navbar-fixed-bottom"> 
+            <div class="container">
+	            <ul class="nav navbar-nav">
+	                <li class="about">
+		                <a href="/"><span class="glyphicon glyphicon-info-sign"></span> About Us </a>
+                    </li>        
+                    <li class="contact">
+                        <a href="/"><span class="glyphicon glyphicon-envelope"></span> Contact </a>
+                    </li> 
+		        </ul>
+		    </div>
+        </nav>
+        
     </body>
 </html>

@@ -5,7 +5,7 @@
             background-color: #4CAF50; /* Green */
             border: none;
             color: white;
-            padding: 15px 32px;
+            padding: 5px 15px;
             text-align: center;
             text-decoration: none;
             display: inline-block;
@@ -36,19 +36,24 @@
     </head>
     
     <body>
+        <!-- Top Navigation Bar -->
         <nav class="navbar navbar-default navbar-static-top navbar-inverse navbar-fixed-top"> 
 	        <div class="container">
 	            <ul class="nav navbar-nav">
 	                <li class="home">
 		                <a href="/"><span class=""></span> JobsUp</a>
                     </li>
-		            <li class="about">
-		                <a href="/"><span class=""></span> About Us</a>
+		            <li class="search">
+		                <a href="/"><span class=""></span> Search </a>
+		            </li>
+		            <li class="profile" style="margin-left:800px;">
+		                <a href="/"><span class="glyphicon glyphicon-user"></span> Company </a>
 		            </li>
 		        </ul>
 		    </div>
 	    </nav>
 	    
+	    <!-- Profile Page -->
 	    <div class="container">
             <h1>My Profile</h1>
             <div class="panel panel-default">
@@ -72,9 +77,11 @@
                     <label for="email"> Country </label> <br> 
                     <input type="text" value=""><br>
                     
+                    <a href="" class="button"> Save </a> 
                 </div>
             </form>
         </div>
+        
     </body>
 
 </html>

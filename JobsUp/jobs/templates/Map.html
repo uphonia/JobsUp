@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+    <style>
+        .button {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 12px;
+        }
+        
+        div {
+            text-align: center;
+        }        
+    
+        .home {
+            font-size: 30px;
+        }
+        
+        h1 {
+            margin: 10px;
+            text-align: left;
+            padding: 15px;
+        }
+        
+    </style>
+    <head>
+        <title> Search | JobsUp </title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    </head>
+    
+    <body>
+        <!-- Top navigation bar -->
+        <nav class="navbar navbar-default navbar-static-top navbar-inverse navbar-fixed-top"> 
+	        <div class="container">
+	            <ul class="nav navbar-nav">
+	                <li class="home">
+		                <a href="/"><span class=""></span> JobsUp </a>
+                    </li>               
+		        </ul>
+		    </div>
+	    </nav>
+	    
+	    <!-- Search Filter Panel -->
+	    <div class="container">
+            <div class="panel panel-default" style="margin-top: 85px; width: 300px;">
+                <h1> Search Filter </h1>
+                <form action="/action_page.php">
+                    <div class="panel-body" style="height: 430px; text-align: left;">
+                        <!-- Job Position Filter -->
+                        <label for="position"> Job Position </label> <br>                      
+                        <div class="row">
+                            <div class="col-xs-8 col-xs-offset-0">
+                                <div class="input-group">
+                                    <div class="input-group-btn search-panel">
+                                        <select class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                                            <option></option>
+                                            <option>Internship</option>
+                                            <option>Full-time</option>
+                                            <option>Part-time</option>
+                                            <option>Co-op</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div> 
+                        </div>
+
+                        <!-- Location Filter -->
+                        <label for="location"> Location </label> <br>
+                        <div class="row">
+                            <div class="col-xs-8 col-xs-offset-0">
+                                <div class="input-group">
+                                    <input type="hidden" name="search_param" value="all" id="search_param">
+                                    <input type="text" class="form-control" name="x">
+                                </div>
+                            </div> 
+                        </div>
+
+                        <!-- Degree Level Filter -->
+                        <label for="degree"> Degree Level </label> <br>
+                        <div class="row">
+                            <div class="col-xs-8 col-xs-offset-0">
+                                <div class="input-group">
+                                    <div class="input-group-btn search-panel">
+                                        <select class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="text-align: left">
+                                            <option></option>
+                                            <option>Associates Degree</option>
+                                            <option>Bachelors Degree</option>
+                                            <option>Masters Degree</option>
+                                            <option>PhD</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div> 
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+    </body>
+</html>
