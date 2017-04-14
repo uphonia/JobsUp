@@ -53,10 +53,11 @@
                 <h1> Search Filter </h1>
                 <form action="/action_page.php">
                     <div class="panel-body" style="height: 430px; text-align: left;">
+                    
                         <!-- Job Position Filter -->
                         <label for="position"> Job Position </label> <br>                      
                         <div class="row">
-                            <div class="col-xs-8 col-xs-offset-0">
+                            <div class="col-xs-3 col-xs-offset-0">
                                 <div class="input-group">
                                     <div class="input-group-btn search-panel">
                                         <select class="btn btn-default dropdown-toggle" data-toggle="dropdown">
@@ -74,10 +75,10 @@
                         <!-- Location Filter -->
                         <label for="location"> Location </label> <br>
                         <div class="row">
-                            <div class="col-xs-8 col-xs-offset-0">
+                            <div class="col-xs-3 col-xs-offset-0" style="width: 290px;">
                                 <div class="input-group">
-                                    <input type="hidden" name="search_param" value="all" id="search_param">
-                                    <input type="text" class="form-control" name="x">
+                                    <input type="checkbox" name="location"> Greenwich Village
+                                    <input type="checkbox" name="location"> Upper East Side <br>
                                 </div>
                             </div> 
                         </div>
@@ -85,14 +86,14 @@
                         <!-- Degree Level Filter -->
                         <label for="degree"> Degree Level </label> <br>
                         <div class="row">
-                            <div class="col-xs-8 col-xs-offset-0">
+                            <div class="col-xs-3 col-xs-offset-0">
                                 <div class="input-group">
                                     <div class="input-group-btn search-panel">
                                         <select class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="text-align: left">
                                             <option></option>
-                                            <option>Associates Degree</option>
-                                            <option>Bachelors Degree</option>
-                                            <option>Masters Degree</option>
+                                            <option>Associates</option>
+                                            <option>Bachelors</option>
+                                            <option>Masters</option>
                                             <option>PhD</option>
                                         </select>
                                     </div>
