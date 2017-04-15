@@ -5,7 +5,7 @@
             background-color: #4CAF50; /* Green */
             border: none;
             color: white;
-            padding: 15px 32px;
+            padding: 10px;
             text-align: center;
             text-decoration: none;
             display: inline-block;
@@ -42,7 +42,10 @@
 	            <ul class="nav navbar-nav">
 	                <li class="home">
 		                <a href="/"><span class=""></span> JobsUp </a>
-                    </li>               
+                    </li> 
+                    <li class="profile" style="margin-left:875px;">
+		                <a href="/"><span class="glyphicon glyphicon-user"></span> Employee </a>
+		            </li>              
 		        </ul>
 		    </div>
 	    </nav>
@@ -52,8 +55,36 @@
             <div class="panel panel-default" style="margin-top: 85px; width: 300px;">
                 <h1> Search Filter </h1>
                 <form action="/action_page.php">
-                    <div class="panel-body" style="height: 430px; text-align: left;">
+                    <div class="panel-body" style="height: 370px; text-align: left;">
                     
+                        <!-- Current Zip Code -->
+                        <label for="zipcode"> Current Zip Code </label> <br>
+                        <div class="row">
+                            <div class="col-xs-3 col-xs-offset-0" style="width: 290px;">
+                                <div class="input-group">
+                                    <input type="text" value=""><br>
+                                </div>
+                            </div> 
+                        </div>
+
+                        <!-- Seek job in radius from current address -->
+                        <label for="radius"> Radius </label> <br>
+                        <div class="row">
+                            <div class="col-xs-3 col-xs-offset-0">
+                                <div class="input-group">
+                                    <div class="input-group-btn search-panel">
+                                        <select class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="text-align: left">
+                                            <option></option>
+                                            <option> < 5 miles</option>
+                                            <option> < 10 miles</option>
+                                            <option> < 15 miles</option>
+                                            <option>20+ miles</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div> 
+                        </div>
+                        
                         <!-- Job Position Filter -->
                         <label for="position"> Job Position </label> <br>                      
                         <div class="row">
@@ -71,18 +102,7 @@
                                 </div>
                             </div> 
                         </div>
-
-                        <!-- Location Filter -->
-                        <label for="location"> Location </label> <br>
-                        <div class="row">
-                            <div class="col-xs-3 col-xs-offset-0" style="width: 290px;">
-                                <div class="input-group">
-                                    <input type="checkbox" name="location"> Greenwich Village
-                                    <input type="checkbox" name="location"> Upper East Side <br>
-                                </div>
-                            </div> 
-                        </div>
-
+                        
                         <!-- Degree Level Filter -->
                         <label for="degree"> Degree Level </label> <br>
                         <div class="row">
@@ -101,9 +121,59 @@
                             </div> 
                         </div>
 
-                    </div>
-                </form>
-            </div>
-        </div>
+                        <!-- Academic Level -->
+                        <label for="academic"> Academic Level </label> <br>
+                        <div class="row">
+                            <div class="col-xs-3 col-xs-offset-0">
+                                <div class="input-group">
+                                    <div class="input-group-btn search-panel">
+                                        <select class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="text-align: left">
+                                            <option></option>
+                                            <option>First-year</option>
+                                            <option>Sophomore</option>
+                                            <option>Junior</option>
+                                            <option>Senior</option>
+                                            <option>Masters</option>
+                                            <option>PhD</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div> 
+                        </div>
+                        
+                        <!-- Industry/Field of Study -->
+                        <label for="industry"> Industry/Field of Study </label> <br>
+                        <div class="row">
+                            <div class="col-xs-3 col-xs-offset-0" style="width: 290px;">
+                                <div class="input-group">
+                                    <input type="text" value=""><br>
+                                </div>
+                            </div> 
+                        </div>
+                        
+                        <!-- Compensation -->
+                        <label for="compensation"> Compensation </label> <br>
+                        <div class="row">
+                            <div class="col-xs-3 col-xs-offset-0">
+                                <div class="input-group">
+                                    <div class="input-group-btn search-panel">
+                                        <select class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="text-align: left">
+                                            <option></option>
+                                            <option>Paid</option>
+                                            <option>Unpaid</option>
+                                            <option>Stipend</option>
+                                            <option>School Credit</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div> 
+                        </div>
+                        
+                    </div> <!-- End of content in panel div --> 
+                </form> <!-- End of form -->
+                
+                <a href="" class="button"> Search </a> 
+            </div> <!-- End of actual panel div -->
+        </div> <!-- End of container -->
     </body>
 </html>
