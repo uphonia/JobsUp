@@ -70,6 +70,13 @@ label {
     text-align: right;
     
 }
+
+.panel-transparent .panel-body{
+    background: rgba(46, 51, 56, 0.2);
+    height: 620px;
+    width: 650px;
+}
+
 @media (max-width: 500px) {
   h1 {
     font-size: 50px;

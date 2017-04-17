@@ -31,46 +31,36 @@
 		    </div>
 	    </nav>
 	    
-        <h1> Welcome to JobsUp, <br> an interactive map of <br> open positions in your area! </h1>
-
-        <!-- Sign Up Form -->
-        <div class="account"> 
-            <form action="/action_page.php">
-                <label for="fname"> First Name </label> <br> 
-                <input type="text" value=""><br>
+        <!-- Panel for Sign Up Form -->
+        <div class="panel panel-primary panel-transparent">
+            <!-- Body of panel -->
+            <div class="panel-body">
+                <h1> Welcome to JobsUp, <br> an interactive map of <br> open positions in your area! </h1>
+                <!-- Sign Up Form -->
+                <div class="account"> 
+                    <form action="/action_page.php">
+                        <label for="fname"> First Name </label> <br> 
+                        <input type="text" value=""><br>
             
-                <label for="lname"> Last Name </label> <br>
-                <input type="text" value=""><br>
+                        <label for="lname"> Last Name </label> <br>
+                        <input type="text" value=""><br>
             
-                <label for="email"> Email </label> <br> 
-                <input type="text" value=""><br>
+                        <label for="email"> Email </label> <br> 
+                        <input type="text" value=""><br>
             
-                <label for="pwd"> Password </label> <br> 
-                <input type="text" value=""><br> 
-            </form>
-        </div>
+                        <label for="pwd"> Password </label> <br> 
+                        <input type="text" value=""><br> 
+                    </form>
+                </div>
     
-        <div class="user">
-            <form action="/action_page.php" method="get">
-                <input type="checkbox" name="user"> Employee <br> 
-                <input type="checkbox" name="user"> Company <br>
-            </form>
-            <a href="" class="button"> Sign Up </a> 
+                <div class="user">
+                    <form action="/action_page.php" method="get">
+                        <input type="checkbox" name="user"> Employee <br> 
+                        <input type="checkbox" name="user"> Company <br>
+                    </form>
+                    <a href="" class="button"> Sign Up </a> 
+                </div>
+            </div>
         </div>
-        
-        <!-- Bottom Navigation Bar -->
-        <nav class="navbar navbar-default navbar-bottom navbar-inverse navbar-fixed-bottom"> 
-            <div class="container">
-	            <ul class="nav navbar-nav">
-	                <li class="about">
-		                <a href="/"><span class="glyphicon glyphicon-info-sign"></span> About Us </a>
-                    </li>        
-                    <li class="contact">
-                        <a href="/"><span class="glyphicon glyphicon-envelope"></span> Contact </a>
-                    </li> 
-		        </ul>
-		    </div>
-        </nav>
-        
     </body>
 </html>
