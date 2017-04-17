@@ -26,9 +26,8 @@ p {
 h1 {
   text-align: center;
   font-weight: bold;
-  padding: 50px;
-  margin: 50px 0 0 0;
   color: black;
+  margin-bottom: 50px;
 }
 
 .button {
@@ -71,12 +70,15 @@ label {
     
 }
 
-.panel-transparent .panel-body{
-    background: rgba(46, 51, 56, 0.2);
-    height: 620px;
-    width: 650px;
+.panel {
+    background-color: rgba(0,0,0,0.15);
+    margin-top: 88px;
 }
 
+.panel-transparent .panel-body{
+    background-color: transparent;
+}
+    
 @media (max-width: 500px) {
   h1 {
     font-size: 50px;
