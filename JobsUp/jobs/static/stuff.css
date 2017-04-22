@@ -35,13 +35,12 @@ h1 {
     border: none;
     color: white;
     padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
     display: inline-block;
     font-size: 16px;
-    margin: 4px 2px;
     cursor: pointer;
 	border-radius: 12px;
+	margin-left: 221px;
+	margin-top: 20px;
 }
 
 .account {
@@ -72,7 +71,7 @@ label {
 
 .panel {
     background-color: rgba(0,0,0,0.15);
-    margin-top: 88px;
+    margin-top: 76px;
 }
 
 .panel-transparent .panel-body{

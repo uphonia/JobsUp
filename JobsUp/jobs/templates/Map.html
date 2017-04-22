@@ -1,23 +1,17 @@
 <!DOCTYPE html>
 <html>
     <style>
-        .button {
+        .btn-searching{
             background-color: #4CAF50; /* Green */
             border: none;
             color: white;
             padding: 10px;
-            text-align: center;
-            text-decoration: none;
             display: inline-block;
             font-size: 16px;
-            margin: 4px 2px;
             cursor: pointer;
             border-radius: 12px;
+            margin: -20px 10px 10px 10px;
         }
-        
-        div {
-            text-align: center;
-        }        
     
         .home {
             font-size: 30px;
@@ -29,6 +23,23 @@
             padding: 15px;
         }
         
+        #map {
+            width: 100%;
+            height: 400px;
+            background-color: grey;
+        }
+        
+        .left {
+            margin-top: 50px; 
+            width: 250px;
+            margin-left: -60px;
+        }
+        
+        .right {
+            width: 1000px;
+            margin-top: 50px;
+            margin-left: -5px;
+        }
     </style>
     <head>
         <title> Search | JobsUp </title>
@@ -38,7 +49,7 @@
     <body>
         <!-- Top navigation bar -->
         <nav class="navbar navbar-default navbar-static-top navbar-inverse navbar-fixed-top"> 
-	        <div class="container">
+	        <div class="top_nav">
 	            <ul class="nav navbar-nav">
 	                <li class="home">
 		                <a href="/"><span class=""></span> JobsUp </a>
@@ -50,130 +61,157 @@
 		    </div>
 	    </nav>
 	    
-	    <!-- Search Filter Panel -->
 	    <div class="container">
-            <div class="panel panel-default" style="margin-top: 85px; width: 300px;">
-                <h1> Search Filter </h1>
-                <form action="/action_page.php">
-                    <div class="panel-body" style="height: 370px; text-align: left;">
-                    
-                        <!-- Current Zip Code -->
-                        <label for="zipcode"> Current Zip Code </label> <br>
-                        <div class="row">
-                            <div class="col-xs-3 col-xs-offset-0" style="width: 290px;">
-                                <div class="input-group">
-                                    <input type="text" value=""><br>
-                                </div>
-                            </div> 
-                        </div>
+	        <div class="row">
+	        
+	            <!-- Search Filter Panel Left Container-->
+	            <div class="col-lg-2">
+                    <div class="left">
+                        <div class="panel panel-default" >
+                            <h1> Search Filter </h1>
+                            <form action="/action_page.php">
+                                <div class="panel-body" style="height:480px;margin-top:-20px;">
+                                
+                                    <!-- Current Zip Code -->
+                                    <label for="zipcode"> Current Zip Code </label> <br>
+                                    <div class="row" style="margin-bottom: 5px;">
+                                        <div class="col-xs-3 col-xs-offset-0" style="width: 290px;">
+                                            <div class="input-group">
+                                                <input type="text" id="zip-code"><br>
+                                            </div>
+                                        </div> 
+                                    </div>
 
-                        <!-- Seek job in radius from current address -->
-                        <label for="radius"> Radius </label> <br>
-                        <div class="row">
-                            <div class="col-xs-3 col-xs-offset-0">
-                                <div class="input-group">
-                                    <div class="input-group-btn search-panel">
-                                        <select class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="text-align: left">
-                                            <option></option>
-                                            <option> < 5 miles</option>
-                                            <option> < 10 miles</option>
-                                            <option> < 15 miles</option>
-                                            <option>20+ miles</option>
-                                        </select>
+                                    <!-- Seek job in radius from current address -->
+                                    <label for="radius"> Radius </label> <br>
+                                    <div class="row" style="margin-bottom: 5px;">
+                                        <div class="col-xs-3 col-xs-offset-0">
+                                            <div class="input-group">
+                                                <div class="input-group-btn search-panel">
+                                                    <select class="btn btn-default dropdown-toggle" id="radius" data-toggle="dropdown" style="text-align: left">
+                                                        <option></option>
+                                                        <option> < 5 miles</option>
+                                                        <option> < 10 miles</option>
+                                                        <option> < 15 miles</option>
+                                                        <option>20+ miles</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div> 
                                     </div>
-                                </div>
-                            </div> 
-                        </div>
                         
-                        <!-- Job Position Filter -->
-                        <label for="position"> Job Position </label> <br>                      
-                        <div class="row">
-                            <div class="col-xs-3 col-xs-offset-0">
-                                <div class="input-group">
-                                    <div class="input-group-btn search-panel">
-                                        <select class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                                            <option></option>
-                                            <option>Internship</option>
-                                            <option>Full-time</option>
-                                            <option>Part-time</option>
-                                            <option>Co-op</option>
-                                        </select>
+                                    <!-- Job Position Filter -->
+                                    <label for="position"> Job Position </label> <br>                      
+                                    <div class="row" style="margin-bottom: 5px;">
+                                        <div class="col-xs-3 col-xs-offset-0">
+                                            <div class="input-group">
+                                                <div class="input-group-btn search-panel">
+                                                    <select class="btn btn-default dropdown-toggle" id="job-position" data-toggle="dropdown">
+                                                        <option></option>
+                                                        <option>Internship</option>
+                                                        <option>Full-time</option>
+                                                        <option>Part-time</option>
+                                                        <option>Co-op</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div> 
                                     </div>
-                                </div>
-                            </div> 
-                        </div>
                         
-                        <!-- Degree Level Filter -->
-                        <label for="degree"> Degree Level </label> <br>
-                        <div class="row">
-                            <div class="col-xs-3 col-xs-offset-0">
-                                <div class="input-group">
-                                    <div class="input-group-btn search-panel">
-                                        <select class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="text-align: left">
-                                            <option></option>
-                                            <option>Associates</option>
-                                            <option>Bachelors</option>
-                                            <option>Masters</option>
-                                            <option>PhD</option>
-                                        </select>
+                                    <!-- Degree Level Filter -->
+                                    <label for="degree"> Degree Level </label> <br>
+                                    <div class="row" style="margin-bottom: 5px;">
+                                        <div class="col-xs-3 col-xs-offset-0">
+                                            <div class="input-group">
+                                                <div class="input-group-btn search-panel">
+                                                    <select class="btn btn-default dropdown-toggle" id="degree" data-toggle="dropdown" style="text-align: left">
+                                                        <option></option>
+                                                        <option>Associates</option>
+                                                        <option>Bachelors</option>
+                                                        <option>Masters</option>
+                                                        <option>PhD</option>
+                                                        <option>None</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div> 
                                     </div>
-                                </div>
-                            </div> 
-                        </div>
 
-                        <!-- Academic Level -->
-                        <label for="academic"> Academic Level </label> <br>
-                        <div class="row">
-                            <div class="col-xs-3 col-xs-offset-0">
-                                <div class="input-group">
-                                    <div class="input-group-btn search-panel">
-                                        <select class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="text-align: left">
-                                            <option></option>
-                                            <option>First-year</option>
-                                            <option>Sophomore</option>
-                                            <option>Junior</option>
-                                            <option>Senior</option>
-                                            <option>Masters</option>
-                                            <option>PhD</option>
-                                        </select>
+                                    <!-- Academic Level -->
+                                    <label for="academic"> Academic Level </label> <br>
+                                    <div class="row" style="margin-bottom: 5px;">
+                                        <div class="col-xs-3 col-xs-offset-0">
+                                            <div class="input-group">
+                                                <div class="input-group-btn search-panel">
+                                                    <select class="btn btn-default dropdown-toggle" id="academic-level" data-toggle="dropdown" style="text-align: left">
+                                                        <option></option>
+                                                        <option>First-year</option>
+                                                        <option>Sophomore</option>
+                                                        <option>Junior</option>
+                                                        <option>Senior</option>
+                                                        <option>Masters</option>
+                                                        <option>PhD</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div> 
                                     </div>
-                                </div>
-                            </div> 
-                        </div>
                         
-                        <!-- Industry/Field of Study -->
-                        <label for="industry"> Industry/Field of Study </label> <br>
-                        <div class="row">
-                            <div class="col-xs-3 col-xs-offset-0" style="width: 290px;">
-                                <div class="input-group">
-                                    <input type="text" value=""><br>
-                                </div>
-                            </div> 
-                        </div>
-                        
-                        <!-- Compensation -->
-                        <label for="compensation"> Compensation </label> <br>
-                        <div class="row">
-                            <div class="col-xs-3 col-xs-offset-0">
-                                <div class="input-group">
-                                    <div class="input-group-btn search-panel">
-                                        <select class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="text-align: left">
-                                            <option></option>
-                                            <option>Paid</option>
-                                            <option>Unpaid</option>
-                                            <option>Stipend</option>
-                                            <option>School Credit</option>
-                                        </select>
+                                    <!-- Industry/Field of Study -->
+                                    <label for="industry"> Industry/Field of Study </label> <br>
+                                    <div class="row" style="margin-bottom: 5px;">
+                                        <div class="col-xs-3 col-xs-offset-0" style="width: 290px;">
+                                            <div class="input-group">
+                                                <input type="text" id="industry"><br>
+                                            </div>
+                                        </div> 
                                     </div>
-                                </div>
-                            </div> 
-                        </div>
                         
-                    </div> <!-- End of content in panel div --> 
-                </form> <!-- End of form -->
+                                    <!-- Compensation -->
+                                    <label for="compensation"> Compensation </label> <br>
+                                    <div class="row" style="margin-bottom: 5px;">
+                                        <div class="col-xs-3 col-xs-offset-0">
+                                            <div class="input-group">
+                                                <div class="input-group-btn search-panel">
+                                                    <select class="btn btn-default dropdown-toggle" id="compensation" data-toggle="dropdown" style="text-align: left">
+                                                        <option></option>
+                                                        <option>Paid</option>
+                                                        <option>Unpaid</option>
+                                                        <option>Stipend</option>
+                                                        <option>School Credit</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div> 
+                                    </div>
+                        
+                                </div> <!-- End of content in panel div --> 
+                            </form> <!-- End of form -->
                 
-                <a href="" class="button"> Search </a> 
-            </div> <!-- End of actual panel div -->
-        </div> <!-- End of container -->
+                            <!-- <a href="" class="button"> Search </a> -->
+                            <button type="search" class="btn btn primary" name="searching" style="background-color: #4CAF50; margin: -180px 10px 10px 15px; color:white;">Search</button>
+                        
+                        </div> <!-- End of actual panel div -->
+                    </div> 
+                </div> <!-- End of left container -->
+                
+                <!-- Right container --> 
+                <div class="col-lg-10">  
+                    <div class="right">
+                        <div class="panel panel-default" >
+                            <div class="panel-body" style="height:580px;">
+                                <h2> hello there </h2>
+                            </div>
+                        </div>
+                    </div> 
+                </div> <!-- End of right container -->
+                
+            </div> <!-- End of row div -->
+        </div> <!-- End of whole container div -->
+                
+        <!-- Map API -->
+        <script>
+        
+        </script>
     </body>
 </html>
