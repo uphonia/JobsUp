@@ -24,8 +24,7 @@
         }
         
         h1 {
-            padding: 80px 200px 0 0;
-            text-align: left;
+            padding: 60px 180px 0 60px;
         }
         
     </style>
@@ -43,44 +42,57 @@
 	                <li class="home">
 		                <a href="/"><span class=""></span> JobsUp</a>
                     </li>
-		            <li class="search">
-		                <a href="/"><span class=""></span> Search </a>
-		            </li>
-		            <li class="profile" style="margin-left:800px;">
+		            <li class="profile" style="margin-left:875px;">
 		                <a href="/"><span class="glyphicon glyphicon-user"></span> Company </a>
 		            </li>
 		        </ul>
 		    </div>
 	    </nav>
 	    
+        <h1>My Profile</h1>
+        
 	    <!-- Profile Page -->
 	    <div class="container">
-            <h1>My Profile</h1>
-            <div class="panel panel-default">
-            <form action="/action_page.php" style="padding: 5px;">
-                <div class="panel-body" style="height: 450px; text-align: left;">
-                    <label for="fname"> Company Name </label> <br> 
-                    <input type="text" id="company-name"><br>
+	        <div class="row">
+	        
+	            <div class="col-lg-6">
+                    <div class="left">
+                        <div class="panel panel-default" style="margin-left: -10px;">
+                            <form action="/action_page.php" style="padding: 5px;">
+                                <div class="panel-body" style="height: 480px; text-align: left;">
+                                    <label for="cname"> Company Name </label> <br> 
+                                    <input type="text" id="company-name"><br>
             
-                    <label for="email"> Email </label> <br> 
-                    <input type="text" id="email"><br>
+                                    <label for="email"> Email </label> <br> 
+                                    <input type="text" id="email"><br>
                 
-                    <label for="email"> Phone Number </label> <br> 
-                    <input type="text" id="phone-number"><br>
+                                    <label for="phone-num"> Phone Number </label> <br> 
+                                    <input type="text" id="phone-number"><br>
                 
-                    <label for="email"> Address 1 </label> <br> 
-                    <input type="text" id="address1"><br>
+                                    <label for="address"> Address </label> <br> 
+                                    <input type="text" id="address"><br>
                     
-                    <label for="email"> Address 2 </label> <br> 
-                    <input type="text" id="address2"><br>
+                                    <label for="country"> Country </label> <br> 
+                                    <input type="text" id="country"><br>
                     
-                    <label for="email"> Country </label> <br> 
-                    <input type="text" id="country"><br>
-                    
-                    <a href="" class="button"> Save </a> 
+                                    <label for="website"> Website </label> <br>
+                                    <input type="text" id="website"><br>
+                                    <br>
+                                    <a href="" class="button"> Save </a> 
+                                </div>
+                            </form>
+                        </div>
+                    </div> <!-- End of left -->
                 </div>
-            </form>
-        </div>
+                
+                <div class="col-lg-6">
+                    <div class="right" >
+                        <a href="" class="button"> View Applicants </a>
+                    </div> <!-- End of right -->
+                </div> 
+                                
+            </div> <!-- End of row -->
+        </div> <!-- End of container -->
         
     </body>
 

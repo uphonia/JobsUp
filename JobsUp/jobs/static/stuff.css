@@ -6,23 +6,6 @@ body {
   background-size: 100%;
 }
 
-p {
-  color: rgba(256, 256, 256, 1);
-  background-color: black;
-  background: -webkit-linear-gradient(bottom, rgba(0, 0, 0, 1), rgba(0,0,0,.4));
-  background: -moz-linear-gradient(bottom, rgba(0, 0, 0, 1), rgba(0,0,0,.4));
-  padding: 10px;
-  text-align: justify;
-  line-height: 28px;
-  position: absolute;
-  bottom: 0;
-  margin: 0;
-  height: 30px;
-  transition: height .5s;
-  -webkit-transition: height .5s;
-  -moz-transition: height .5s;
-}
-
 h1 {
   text-align: center;
   font-weight: bold;
@@ -66,7 +49,6 @@ label {
 
 .email-login {
     text-align: right;
-    
 }
 
 .panel {
