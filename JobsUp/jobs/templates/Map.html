@@ -19,9 +19,9 @@
         }
         
         h1 {
-            margin: 10px;
             text-align: left;
-            padding: 15px;
+            padding-left: 10px;
+            padding-bottom: 10px;
         }
         
         #map {
@@ -206,6 +206,7 @@
                     <div class="map-container">
                         <div class="panel panel-default" >
                             <div class="panel-body" style="height:580px;">
+                                <!-- initMap is called inside this div to produce the map -->
                                 <div id="map">
                                     
                                 </div>
@@ -219,6 +220,7 @@
                 
         <!-- Map API -->
         <script>
+            // Puts a marker on the map based on latitude and longitude values
             function initMap() {
                 var uluru = {lat: 40.7128, lng: -74.0059};
                 var map = new google.maps.Map(document.getElementById('map'), {
@@ -232,6 +234,8 @@
                 });
             }
         </script>
+        
+        <!-- Using Google Maps API --> 
         <script async defer 
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBJzcnEVhOL2N5QLhNrYiWwbVLSLzNPsDg&callback=initMap">
         </script>
