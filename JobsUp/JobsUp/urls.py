@@ -15,11 +15,15 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
+from django.contrib.auth import views as auth_views
 admin.autodiscover()
 
 import jobs.views
 
 urlpatterns = [
 	url(r'^$', jobs.views.index, name = 'index'),
+	url(r'^sign_up/$', jobs.views.sign_up, name = 'signup'),
+	url(r'^log_in/$', jobs.views.log_in, name = 'login'),
+	url(r'^log_out/$', jobs.views.log_out, name = 'logout'),
     url(r'^admin/', admin.site.urls),
 ]

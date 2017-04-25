@@ -1,15 +1,23 @@
 from django import forms
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.models import User, Profile
 
-class UserForm(forms.Form):
-    first_name = forms.CharField(max_length = 200, required = True)
-    last_name = forms.CharField(max_length = 200, required = True)
-    email = forms.CharField(max_length = 200, required = True)
-    password = forms.CharField(max_length = 200, required = True)
-    company_name = forms.CharField(max_length = 200, required = False)
-    Company = forms.
-    area_of_interest = forms.CharField(max_Length = 200, required = False)
-    jobs = forms.CharField(max_Length = 500, required = False)
 
-class LogIn(forms.Form):
-	email = forms.CharField(max_length = 200, required = True)
-    password = forms.CharField(max_length = 200, required = True)
+class SignUpForm(UserCreationForm):
+	first_name = forms.CharField(max_length = 200, required = False)
+	last_name = forms.CharField(max_Length = 200, required = False)
+	email = forms.EmailField(max_length = 254, help_text = 'Required. Inform a valid email address.')
+
+	class Meta:
+		model = User
+			fields = ('username', 'first_name', 'last_name', 'email', 'password')
+
+class UserForm(forms.ModelForm):
+	class Meta:
+		model = User
+		fields = ('first_name', 'last_name', 'email')
+
+class ProfileForm(forms.ModelForm):
+	class Meta:
+		model = Profile
+		fields = ('url')

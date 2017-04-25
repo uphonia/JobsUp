@@ -1,17 +1,31 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
-class User(models.Model):
-	first_name = models.CharField(max_length = 200, null = True)
-	last_name = models.CharField(max_length = 200, null = True)
-	email = models.CharField(max_Length = 200, null = False)
-	password = models.CharField(max_Length = 200, null = False)
+class Profile(models.Model):
+	user = models.OneToOneField(User, on_delete=models.CASCADE, related_name = 'profile')
 	company_name = models.CharField(max_Length = 200, null = True)
 	area_of_interest = models.CharField(max_Length = 200, null = True)
-	phone_num = models.CharField(max_Length = 200, null = False)
-	address = models.CharField(max_Length = 200, null = False)
-	website = models.CharField(max_Length = 200, null = False)
+	phone_num = models.CharField(max_Length = 200, null = True)
+	address = models.CharField(max_Length = 200, null = True)
+	website = models.CharField(max_Length = 200, null = True)
 	corpse = models.IntegerField()
-	hashid = models.CharField(max_Length = 50, null = False)
+
+	def __str__(self):
+        return 'Profile of user: {}'.format(self.user.username)
+
+@receiver(post_save, sender=User)
+def create_user_profile(sender, instance, created, **kwargs):
+    if created:
+        Profile.objects.create(user=instance)
+
+@receiver(post_save, sender=User)
+def save_user_profile(sender, instance, **kwargs):
+    instance.profile.save()
+
+def update_user_profile(sender, instance, created, **kwargs):
+	if created:
+        Profile.objects.create(user=instance)
+    instance.profile.save()

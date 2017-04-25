@@ -41,7 +41,9 @@
                 <h1> Welcome to JobsUp, <br> an interactive map of <br> open positions in your area! </h1>
                 <!-- Sign Up Form -->
                 <div class="account"> 
-                    <form action="sign_up/" method = "GET">
+                    <form action="sign_up/" method = "POST">
+                    	<label for="fname"> User Name </label> <br> 
+                        <input type="text" id="username" name = "username"><br>
 
                         <label for="fname"> First Name </label> <br> 
                         <input type="text" id="first_name" name = "first_name"><br>
@@ -50,13 +52,13 @@
                         <input type="text" id="last_name" name = last_name><br>
             
                         <label for="email"> Email </label> <br> 
-                        <input type="text" id="email" name = "email"><br>
+                        <input type="email" id="email" name = "email"><br>
             
                         <label for="pwd"> Password </label> <br> 
                         <input type="text" id="password" name = "password"><br> 
 
                         <label for="personnel"> Personnel </label> <br>
-                        <select class="btn btn-default dropdown-toggle" id="radius" data-toggle="dropdown" style="text-align: left">
+                        <select class="btn btn-default dropdown-toggle" id="radius" data-toggle="dropdown" style="text-align: left" name = personnel>
                             <option></option>
                             <option> Employee</option>
                             <option> Company</option>
