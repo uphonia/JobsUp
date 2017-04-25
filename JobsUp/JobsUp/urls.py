@@ -24,6 +24,6 @@ urlpatterns = [
 	url(r'^$', jobs.views.index, name = 'index'),
 	url(r'^sign_up/$', jobs.views.sign_up, name = 'signup'),
 	url(r'^log_in/$', jobs.views.log_in, name = 'login'),
-	url(r'^log_out/$', jobs.views.log_out, name = 'logout'),
+	#url(r'^log_out/$', jobs.views.log_out, name = 'logout'),
     url(r'^admin/', admin.site.urls),
 ]

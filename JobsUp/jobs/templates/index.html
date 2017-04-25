@@ -18,18 +18,20 @@
 	                <li class="home">
 		                <a href="/"><span class=""></span> JobsUp</a>
                     </li>
-		            <li class="email-login" style = "padding-top:13px; margin-left:580px;">
-		                <input type="text" placeholder="Email">
-		            </li>
-		            <li class="password-login" style="padding-top:13px; margin-left:20px;">
-		                <input type="text" placeholder="Password">
-		            </li>
-		            <li class="login">
-		                <a href="/"> Login </a>
-		            </li> 
-		            <li class="contact" style="margin-left: -8px;">
+                    {% csrf_token %}
+                    <form class = "form-inline" action = "log_in/" method = "GET">
+		            <!--<li class="username-login">style = "padding-top:13px; margin-left:580px; "-->
+		                <input name = "username" type="text" placeholder="Username">
+		                <input name = "email" type="text" placeholder="Email">
+		            <!--</li>-->
+		            <!--<li class="password-login">style="padding-top:13px; margin-left:20px;"" -->
+		                <input name = "password" type="text" placeholder="Password">
+		            <!--</li>-->
+		            <button class="login" type = "submit">Log In</button>
+		            </form>
+		            <!--<li class="contact" style="margin-left: -8px;">
 		                <a href=""><span class="glyphicon glyphicon-envelope"></span></a>
-		            </li>               
+		            </li> -->              
 		        </ul>
 		    </div>
 	    </nav>
@@ -42,6 +44,7 @@
                 <!-- Sign Up Form -->
                 <div class="account"> 
                     <form action="sign_up/" method = "POST">
+                    	{% csrf_token %}
                     	<label for="fname"> User Name </label> <br> 
                         <input type="text" id="username" name = "username"><br>
 
@@ -55,7 +58,10 @@
                         <input type="email" id="email" name = "email"><br>
             
                         <label for="pwd"> Password </label> <br> 
-                        <input type="text" id="password" name = "password"><br> 
+                        <input type="text" id="password1" name = "password1"><br> 
+
+                        <label for="pwd"> Confirm Password </label> <br> 
+                        <!--<input type="text" id="password2" name = "password2"><br>
 
                         <label for="personnel"> Personnel </label> <br>
                         <select class="btn btn-default dropdown-toggle" id="radius" data-toggle="dropdown" style="text-align: left" name = personnel>
@@ -63,11 +69,8 @@
                             <option> Employee</option>
                             <option> Company</option>
                         </select> <br>
-                            
-                        
-                        <label for = "fcname">Company Name </label> <br>
-                        <input type = "text" id = company_name name = "company_name"> <br>
-                        <input type="submit" value="Sign Up">
+
+                        <input type="submit" class = "button" value="Sign Up">
                     </form>
                 </div>
     
