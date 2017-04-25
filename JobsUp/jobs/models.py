@@ -10,4 +10,8 @@ class User(models.Model):
 	password = models.CharField(max_Length = 200, null = False)
 	company_name = models.CharField(max_Length = 200, null = True)
 	area_of_interest = models.CharField(max_Length = 200, null = True)
+	phone_num = models.CharField(max_Length = 200, null = False)
+	address = models.CharField(max_Length = 200, null = False)
+	website = models.CharField(max_Length = 200, null = False)
+	corpse = models.IntegerField()
 	hashid = models.CharField(max_Length = 50, null = False)

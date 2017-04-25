@@ -16,10 +16,14 @@ def sign_up(request):
 	if request.method = 'GET':
 		form = UserForm(request.GET)
 
+		context = ''
+        template = ''
+
 		if form.is_valid():
 			user = {}
 			if form.cleaned_data["user"] == "Company":
 				user["company_name"] = form.cleaned_data["company_name"]
+				
 			user["first_name"] = form.cleaned_data["first_name"]
             user["last_name"] = form.cleaned_data["last_name"]
             user["email"] = form.cleaned_data["email"]
@@ -30,8 +34,14 @@ def sign_up(request):
 
             u = User(** user)
             u.save()
-        context = ""
-        template = ""
+
+
+        	if form.cleaned_data["user"] == "Company":
+        		template = 'CompanyProfiles.html'
+        	else:
+        		template = 'UserProfiles'
+        	context = {'user' : user}
+
     return render(request, template, context)
 
 
@@ -48,5 +58,5 @@ def log_in(request):
 
 
 def edit_Profile(request):
-	
+
 
