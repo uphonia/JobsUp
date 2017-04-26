@@ -47,12 +47,14 @@
 		            <li class="search">
 		                <a href="~/../Map.html"><span class=""></span> Search </a>
 		            </li>
-		            <li class="profile" style="margin-left:725px;">
-		                <a href="~/../UserProfiles.html"><span class="glyphicon glyphicon-user"></span> Employee </a>
+		            <li class="profile" style="margin-left:700px;">
+		                <a href="/"><span class="glyphicon glyphicon-user"></span> Employee </a>
 		            </li>
-		            <li class="logout" style="text-align:right;">
-		                <a herf="">Logout</a>
-		            </li> 
+                    <li>
+		            <form class="logout" style = "padding-top:13px" action = "/log_out" method = "GET">
+		                <input class = "logout" type = "submit" value = "Logout"><
+		            </form> 
+                    </li>
 		        </ul>
 		    </div>
 	    </nav>
@@ -64,22 +66,24 @@
             <div class="col-lg-6">
                 <div class="left">
                     <div class="panel panel-default" style="margin-left: -35px;">
-                        <form action="/action_page.php" method="get" style="padding: 5px;">
+                        <form action="edit_profile/" method="post" style="padding: 5px;">
+                        {% csrf_token %}
                             <div class="panel-body" style="height: 480px; text-align: left;">
+                            <input type="text" id="hashid" name="hashid" class="hidden" value={{user.hashid}}>
                                 <label for="fname"> First Name </label> <br> 
-                                <input type="text" id="first_name"> <br>
+                                <input type="text" id="first_name" name = "first_name" value = {{user.first_name}}> <br>
                 
                                 <label for="lname"> Last Name </label> <br>
-                                <input type="text" id="last_name"><br>
+                                <input type="text" id="last_name" name = "last_name" value = {{user.last_name}}><br>
             
                                 <label for="email"> Email </label> <br> 
-                                <input type="text" id="email"><br>
+                                <input type="text" id="email" name = "email" value = {{user.email}}><br>
                 
                                 <label for="phone-num"> Phone Number </label> <br> 
-                                <input type="text" id="phone-number"><br>
+                                <input type="text" id="phone-number" name = "phone_num" value = {{user.profile.phone_num}}><br>
                 
                                 <label for="degree"> Educational Degree </label> <br> 
-                                <select class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="text-align: left">
+                                <select class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="text-align: left" name = "degree" value = {{user.profile.degree}}>
                                     <option></option>
                                     <option>Associates</option>
                                     <option>Bachelors</option>
@@ -89,12 +93,12 @@
                                 </select> <br>
                     
                                 <label for="address"> Address </label><br>
-                                <input type="text" id="address"><br>
+                                <input type="text" id="address" name = "address" value = {{user.profile.address}}><br>
                     
                                 <label for="resume"> Resume link </label> <br> 
-                                <input type="text" id="resume-linke"><br>
+                                <input type="text" id="resume-linke" name = "resume-link" value = {{user.profile.resume}}><br>
                                 <br>
-                                <a href="" class="button"> Save </a> 
+                                <a href="" class="button" type = "submit"> Save </a> 
                             </div>
                         </form>
                     </div> <!-- End of panel panel-default -->
