@@ -61,7 +61,7 @@
 	            <div class="col-lg-6">
                     <div class="left">
                         <div class="panel panel-default" style="margin-left: -20px;">
-                            <form action="edit_profile/" method="post" style="padding: 5px;">
+                            <form action="/edit_profile/" method="post" style="padding: 5px;">
                             {% csrf_token %}
                                 <div class="panel-body" style="height: 480px; text-align: left;">
                                 <input type="text" id="hashid" name="hashid" class="hidden" value={{user.hashid}}>
@@ -80,7 +80,7 @@
                                     <label for="website"> Website </label> <br>
                                     <input type="text" id="website" name = "website" value = {{user.profile.website}}><br>
                                     <br>
-                                    <a href="" type = "submit" class="button"> Save </a> 
+                                    <input type = "submit" class="button" value = "Save">
                                 </div>
                             </form>
                         </div>

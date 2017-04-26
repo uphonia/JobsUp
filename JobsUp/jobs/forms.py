@@ -17,3 +17,12 @@ class LogInForm(forms.Form):
 
 class ProfileForm(forms.Form):
 	hashid = forms.CharField(max_length = 200, required = True)
+	company_name = forms.CharField(max_length = 200, required = False)
+	first_name = forms.CharField(max_length = 200, required = False)
+	last_name = forms.CharField(max_length = 200, required = False)
+	email = forms.EmailField(max_length = 200, required = True)
+	phone_num = forms.CharField(max_length = 200, required = True)
+	address = forms.CharField(max_length = 500, required = True)
+	website = forms.CharField(max_length = 200, required = False)
+	degree = forms.CharField(max_length = 200, required = False)
+	resume = forms.CharField(max_length = 200, required = False)

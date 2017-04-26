@@ -66,7 +66,7 @@
             <div class="col-lg-6">
                 <div class="left">
                     <div class="panel panel-default" style="margin-left: -35px;">
-                        <form action="edit_profile/" method="post" style="padding: 5px;">
+                        <form action="/edit_profile/" method="post" style="padding: 5px;">
                         {% csrf_token %}
                             <div class="panel-body" style="height: 480px; text-align: left;">
                             <input type="text" id="hashid" name="hashid" class="hidden" value={{user.hashid}}>
@@ -83,8 +83,8 @@
                                 <input type="text" id="phone-number" name = "phone_num" value = {{user.profile.phone_num}}><br>
                 
                                 <label for="degree"> Educational Degree </label> <br> 
-                                <select class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="text-align: left" name = "degree" value = {{user.profile.degree}}>
-                                    <option></option>
+                                <select class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="text-align: left" name = "degree">
+                                    <option>{{user.profile.degree}}</option>
                                     <option>Associates</option>
                                     <option>Bachelors</option>
                                     <option>Masters</option>
@@ -96,9 +96,9 @@
                                 <input type="text" id="address" name = "address" value = {{user.profile.address}}><br>
                     
                                 <label for="resume"> Resume link </label> <br> 
-                                <input type="text" id="resume-linke" name = "resume-link" value = {{user.profile.resume}}><br>
+                                <input type="text" id="resume" name = "resume" value = {{user.profile.resume}}><br>
                                 <br>
-                                <a href="" class="button" type = "submit"> Save </a> 
+                                <input class="button" type = "submit" value = "Save">   
                             </div>
                         </form>
                     </div> <!-- End of panel panel-default -->
