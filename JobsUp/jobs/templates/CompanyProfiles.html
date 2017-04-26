@@ -45,7 +45,7 @@
 		            <li class="profile" style="margin-left:800px;">
 		                <a href="~/../CompanyProfiles.html"><span class="glyphicon glyphicon-user"></span> Company </a>
 		            </li>
-		            <li class="logout" style="text-align:right;">
+		            <li class="logout" style="text-align:right;" name = logout action = "log_out/">
 		                <a herf="">Logout</a>
 		            </li> 
 		        </ul>
@@ -61,22 +61,24 @@
 	            <div class="col-lg-6">
                     <div class="left">
                         <div class="panel panel-default" style="margin-left: -20px;">
-                            <form action="/action_page.php" method="get" style="padding: 5px;">
+                            <form action="edit_profile/" method="post" style="padding: 5px;">
+                            {% csrf_token %}
                                 <div class="panel-body" style="height: 480px; text-align: left;">
+                                <input type="text" id="hashid" name="hashid" class="hidden" value={{user.hashid}}>
                                     <label for="cname"> Company Name </label> <br> 
-                                    <input type="text" id="company-name"><br>
+                                    <input type="text" id="company-name" name = "company_name" value = {{user.company_name}}><br>
             
                                     <label for="email"> Email </label> <br> 
-                                    <input type="text" id="email"><br>
+                                    <input type="text" id="email" name = "email" value = {{user.email}}><br>
                 
                                     <label for="phone-num"> Phone Number </label> <br> 
-                                    <input type="text" id="phone-number"><br>
+                                    <input type="text" id="phone-number" name = "phone_num" value = {{user.profile.phone_num}}><br>
                 
                                     <label for="address"> Address </label> <br> 
-                                    <input type="text" id="address"><br>
+                                    <input type="text" id="address" name = "address" value = {{user.profile.address}}><br>
                     
                                     <label for="website"> Website </label> <br>
-                                    <input type="text" id="website"><br>
+                                    <input type="text" id="website" name = "website" value = {{user.profile.website}}><br>
                                     <br>
                                     <a href="" type = "submit" class="button"> Save </a> 
                                 </div>

@@ -13,10 +13,7 @@ class SignUpForm(forms.Form):
 
 class LogInForm(forms.Form):
 	username = forms.CharField(max_length = 200, required = True)
-	email = forms.EmailField(max_length = 254, required = True)
 	password = forms.CharField(max_length = 200, required = True)
 
-class UserForm(forms.ModelForm):
-	class Meta:
-		model = User
-		fields = ('first_name', 'last_name', 'email')
+class ProfileForm(forms.Form):
+	hashid = forms.CharField(max_length = 200, required = True)
