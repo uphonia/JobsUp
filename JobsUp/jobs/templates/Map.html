@@ -228,8 +228,10 @@
         <!-- Map API -->
         <script>
             // Puts a marker on the map based on latitude and longitude values
+            var companies = {{comp|safe}}
             var map, infoWindow;
             var markers = [];
+            var content = [];
             var locationSelect;
             
             function initMap() {
@@ -260,6 +262,7 @@
                         });
                         infoWindow.open(map);
                         map.setCenter(pos);
+                        SearchLocationsNear(pos);
                     }, function(){
                         handelLocationError(true, infoWindow, map.getCenter());
                     });
@@ -274,7 +277,7 @@
                 var contentString = '<div id="content">'+
                 '<div id="siteNotice">'+
                 '</div>'+
-                '<h1 id="firstHeading" class="firstHeading">Company Name</h1>'+
+                '<h1 id="firstHeading" class="firstHeading">{{c[0].profile.company_name}}</h1>'+
                 '<div id="bodyContent">'+
                 '<p> <b>Job Position: </b> </p> <p><b>Contact: </b></p>'+
                 '</div>'+
@@ -323,12 +326,13 @@
             function searchLocationsNear(center) {
                 clearLocations();
                 
-                var radius = document.getElementById('radiusSelect').value;
-                var searchUrl = 'storelocator.php?lat=' + center.lat() + '&lng=' + center.lng() + '&radius=' + radius;
+                var radius = parseInt({{radius}});
+                var searchUrl = 'storelocator.php?lat=' + center.lat() + '&lng=' + center.lng() + '&radius="{{radius}}"';
                 downloadUrl(searchUrl, function(data) {
                    var xml = parseXml(data);
                    var markerNodes = xml.documentElement.getElementsByTagName("marker");
                    var bounds = new google.maps.LatLngBounds();
+                   for(var i = 0; i < companies.length; i++){
                    for (var i = 0; i < markerNodes.length; i++) {
                          var id = markerNodes[i].getAttribute("id");
                          var name = markerNodes[i].getAttribute("name");
@@ -350,6 +354,7 @@
                         var markerNum = locationSelect.options[locationSelect.selectedIndex].value;
                         google.maps.event.trigger(markers[markerNum], 'click');
                     };
+                }
                 });
             };
             
