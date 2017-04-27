@@ -77,11 +77,11 @@
 	            <div class="col-lg-2">
                     <div class="left">
                         <div class="panel panel-default" >
-                            <h1> Search Filter </h1>
+                            <!--<h1> Search Filter </h1>
                             <form action="/action_page.php" method="get">
                                 <div class="panel-body" style="height:480px;margin-top:-20px;">
                                 
-                                    <!-- Current Zip Code -->
+                                   
                                     <label for="zipcode"> Current Zip Code </label> <br>
                                     <div class="row" style="margin-bottom: 5px;">
                                         <div class="col-xs-3 col-xs-offset-0" style="width: 290px;">
@@ -91,7 +91,7 @@
                                         </div> 
                                     </div>
 
-                                    <!-- Seek job in radius from current address -->
+                                    
                                     <label for="radius"> Radius </label> <br>
                                     <div class="row" style="margin-bottom: 5px;">
                                         <div class="col-xs-3 col-xs-offset-0">
@@ -109,7 +109,7 @@
                                         </div> 
                                     </div>
                         
-                                    <!-- Job Position Filter -->
+                                    
                                     <label for="position"> Job Position </label> <br>                      
                                     <div class="row" style="margin-bottom: 5px;">
                                         <div class="col-xs-3 col-xs-offset-0">
@@ -127,7 +127,7 @@
                                         </div> 
                                     </div>
                         
-                                    <!-- Degree Level Filter -->
+                                    
                                     <label for="degree"> Degree Level </label> <br>
                                     <div class="row" style="margin-bottom: 5px;">
                                         <div class="col-xs-3 col-xs-offset-0">
@@ -146,7 +146,7 @@
                                         </div> 
                                     </div>
 
-                                    <!-- Academic Level -->
+                                    
                                     <label for="academic"> Academic Level </label> <br>
                                     <div class="row" style="margin-bottom: 5px;">
                                         <div class="col-xs-3 col-xs-offset-0">
@@ -166,7 +166,7 @@
                                         </div> 
                                     </div>
                         
-                                    <!-- Industry/Field of Study -->
+                                    
                                     <label for="industry"> Industry/Field of Study </label> <br>
                                     <div class="row" style="margin-bottom: 5px;">
                                         <div class="col-xs-3 col-xs-offset-0" style="width: 290px;">
@@ -176,7 +176,7 @@
                                         </div> 
                                     </div>
                         
-                                    <!-- Compensation -->
+                                    
                                     <label for="compensation"> Compensation </label> <br>
                                     <div class="row" style="margin-bottom: 5px;">
                                         <div class="col-xs-3 col-xs-offset-0">
@@ -194,11 +194,11 @@
                                         </div> 
                                     </div>
                         
-                                </div> <!-- End of content in panel div --> 
-                            </form> <!-- End of form -->
+                                </div> 
+                            </form> 
                 
-                            <!-- <a href="" class="button"> Search </a> -->
-                            <button type="search" class="btn btn primary" name="searching" style="background-color: #4CAF50; margin: -180px 10px 10px 15px; color:white;">Search</button>
+                            
+                            <button type="search" class="btn btn primary" name="searching" style="background-color: #4CAF50; margin: -180px 10px 10px 15px; color:white;">Search</button>-->
                         
                         </div> <!-- End of actual panel div -->
                     </div> 
@@ -224,17 +224,48 @@
         <!-- Map API -->
         <script>
             // Puts a marker on the map based on latitude and longitude values
+            var map, infoWindow;
             function initMap() {
                 var uluru = {lat: 40.7128, lng: -74.0059};
-                var map = new google.maps.Map(document.getElementById('map'), {
+                map = new google.maps.Map(document.getElementById('map'), {
                   zoom: 15,
                   center: uluru
                 });
-                
+                infoWindow = new google.maps.InfoWindow;
                 var marker = new google.maps.Marker({
                   position: uluru,
                   map: map
                 });
+
+                if(navigator.geolocation){
+                    navigator.geolocation.getCurrentPosition(function(position){
+                        var pos = {
+                            lat: position.coords.latitude,
+                            lng: position.coords.longitude
+                        };
+
+                        infoWindow.setPosition(pos);
+                        infoWindow.setContent('Location found.');
+                        marker = new google.maps.Marker({
+                            position: pos,
+                            map: map
+                        });
+                        infoWindow.open(map);
+                        map.setCenter(pos);
+                    }, function(){
+                        handelLocationError(true, infoWindow, map.getCenter());
+                    });
+                }else{
+                    handleLocationError(false, infoWindow, map.getCenter());
+                }
+            }
+
+            function handleLocationError(browserHasGeolocation, infoWindow, pos){
+                infoWindow.setPosition(pos);
+                infoWindow.setContent(browserHasGeolocation ? 
+                    'Error: Service Failed.' :
+                    'Error: Browser does not support geolocation.');
+                infoWindow.open(map);
             }
         </script>
         

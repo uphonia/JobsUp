@@ -42,12 +42,14 @@
 	                <li class="home">
 		                <a href=""><span class=""></span> JobsUp</a>
                     </li>
-		            <li class="profile" style="margin-left:800px;">
+		            <li class="profile" style="margin-left:700px;">
 		                <a href="/"><span class="glyphicon glyphicon-user"></span> Company </a>
 		            </li>
-		            <form class="logout" style="text-align:right;" action = "/log_out" method = "GET">
+                    <li>
+		            <form class="logout" style="padding-top:13px;" action = "/log_out" method = "GET">
                         <input class = "logout" type = "submit" value = "Logout">
                     </form> 
+                    </li>
 		        </ul>
 		    </div>
 	    </nav>
@@ -66,19 +68,19 @@
                                 <div class="panel-body" style="height: 480px; text-align: left;">
                                 <input type="text" id="hashid" name="hashid" class="hidden" value={{user.hashid}}>
                                     <label for="cname"> Company Name </label> <br> 
-                                    <input type="text" id="company-name" name = "company_name" value = {{user.company_name}}><br>
+                                    <input type="text" id="company-name" name = "company_name" value = "{{user.profile.company_name}}" style = "width:400px;"><br>
             
                                     <label for="email"> Email </label> <br> 
-                                    <input type="text" id="email" name = "email" value = {{user.email}}><br>
+                                    <input type="text" id="email" name = "email" value = {{user.email}} style = "width:400px;"><br>
                 
                                     <label for="phone-num"> Phone Number </label> <br> 
-                                    <input type="text" id="phone-number" name = "phone_num" value = {{user.profile.phone_num}}><br>
+                                    <input type="text" id="phone-number" name = "phone_num" value = {{user.profile.phone_num}} style = "width:400px;"><br>
                 
                                     <label for="address"> Address </label> <br> 
-                                    <input type="text" id="address" name = "address" value = {{user.profile.address}}><br>
+                                    <input type="text" id="address" name = "address" value = "{{user.profile.address}}" style = "width:400px;"><br>
                     
                                     <label for="website"> Website </label> <br>
-                                    <input type="text" id="website" name = "website" value = {{user.profile.website}}><br>
+                                    <input type="text" id="website" name = "website" value = "{{user.profile.website}}"" style = "width:400px;"><br>
                                     <br>
                                     <input type = "submit" class="button" value = "Save">
                                 </div>

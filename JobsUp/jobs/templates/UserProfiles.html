@@ -44,14 +44,11 @@
 	                <li class="home">
 		                <a href=""><span class=""></span> JobsUp</a>
                     </li>
-		            <li class="search">
-		                <a href="~/../Map.html"><span class=""></span> Search </a>
-		            </li>
 		            <li class="profile" style="margin-left:700px;">
 		                <a href="/"><span class="glyphicon glyphicon-user"></span> Employee </a>
 		            </li>
                     <li>
-		            <form class="logout" style = "padding-top:13px" action = "/log_out" method = "GET">
+		            <form class="logout" style = "padding-top:13px;" action = "/log_out" method = "GET">
 		                <input class = "logout" type = "submit" value = "Logout"><
 		            </form> 
                     </li>
@@ -71,16 +68,16 @@
                             <div class="panel-body" style="height: 480px; text-align: left;">
                             <input type="text" id="hashid" name="hashid" class="hidden" value={{user.hashid}}>
                                 <label for="fname"> First Name </label> <br> 
-                                <input type="text" id="first_name" name = "first_name" value = {{user.first_name}}> <br>
+                                <input type="text" id="first_name" name = "first_name" value = {{user.first_name}} style = "width:400px;"> <br>
                 
                                 <label for="lname"> Last Name </label> <br>
-                                <input type="text" id="last_name" name = "last_name" value = {{user.last_name}}><br>
+                                <input type="text" id="last_name" name = "last_name" value = {{user.last_name}} style = "width:400px;"><br>
             
                                 <label for="email"> Email </label> <br> 
-                                <input type="text" id="email" name = "email" value = {{user.email}}><br>
+                                <input type="text" id="email" name = "email" value = {{user.email}} style = "width:400px;"><br>
                 
                                 <label for="phone-num"> Phone Number </label> <br> 
-                                <input type="text" id="phone-number" name = "phone_num" value = {{user.profile.phone_num}}><br>
+                                <input type="text" id="phone-number" name = "phone_num" value = {{user.profile.phone_num}} style = "width:400px;"><br>
                 
                                 <label for="degree"> Educational Degree </label> <br> 
                                 <select class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="text-align: left" name = "degree">
@@ -93,10 +90,10 @@
                                 </select> <br>
                     
                                 <label for="address"> Address </label><br>
-                                <input type="text" id="address" name = "address" value = {{user.profile.address}}><br>
+                                <input type="text" id="address" name = "address" value = "{{user.profile.address}}" style = "width:400px;"><br>
                     
                                 <label for="resume"> Resume link </label> <br> 
-                                <input type="text" id="resume" name = "resume" value = {{user.profile.resume}}><br>
+                                <input type="text" id="resume" name = "resume" value = {{user.profile.resume}} style = "width:400px;"><br>
                                 <br>
                                 <input class="button" type = "submit" value = "Save">   
                             </div>
@@ -107,11 +104,53 @@
             
             <div class="col-lg-6">
                 <div class="right" >
+                    <div class="panel panel-default" >
+                            <h1 style = "margin-top:-40px;"> Search Filter </h1> <br>
+                            <form action="/action_page.php" method="get">
+                            <input type="text" id="hashid" name="hashid" class="hidden" value={{user.hashid}}>
+                                <div class="panel-body" style="height:400px; margin-top:-50px;">
+                                
+                                    <!-- Current Zip Code -->
+
+                                    <!-- Seek job in radius from current address -->
+                                    <label for="radius"> Radius </label> 
+                                    <div class="row" style="">
+                                        <div class="col-xs-3 col-xs-offset-0">
+                                            <div class="input-group">
+                                                <div class="input-group-btn search-panel">
+                                                    <select class="btn btn-default dropdown-toggle" id="radius" name = "radius" data-toggle="dropdown" style="text-align: center">
+                                                        <option></option>
+                                                        <option value = "5"> < 5 miles</option>
+                                                        <option value = "10"> < 10 miles</option>
+                                                        <option value = "15"> < 15 miles</option>
+                                                        <option value = "20">20+ miles</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div> 
+                                    </div>
+                        
+                                    <!-- Job Position Filter -->
+                        
+                                    <!-- Degree Level Filter -->
+
+                                    <!-- Academic Level -->
+                        
+                                    <!-- Industry/Field of Study -->
+                        
+                                    <!-- Compensation -->
+                        
+                                </div> <!-- End of content in panel div --> 
+                                <button type="submit" class="btn btn primary" name="searching" style="background-color: #4CAF50; margin: -180px 10px 10px 15px; color:white;">Search</button>
+                            </form> <!-- End of form -->
+                
+                            <!-- <a href="" class="button"> Search </a> -->
+                        
+                        </div> <!-- End of actual panel div -->
+                    </div> 
                     <a href="~/../Applications.html" class="button"> View Applications </a>
                 </div> <!-- End of right -->
             </div> 
-            
-        </div>
         
     </body>
 

@@ -4,7 +4,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 from django.contrib.auth import login, authenticate, logout
 
-from .forms import SignUpForm, LogInForm, ProfileForm
+from .forms import SignUpForm, LogInForm, ProfileForm, MapRequestForm
 from .models import Profile, Company, User, Application
 
 # Create your views here.
@@ -81,14 +81,13 @@ def edit_profile(request):
 				temp = 1
 				u = User.objects.filter(hashid = form.cleaned_data['hashid'])
 			u = u[0]
-			print(form.cleaned_data['address'])
-			print(form['address'])
+			print('Address' + form.cleaned_data['address'])
 			if temp == 0:
 				template = "CompanyProfiles.html"
 				if u.profile is None:
 					cprof = Profile(company_name = form.cleaned_data['company_name'],
 						website = form.cleaned_data['website'], phone_num = form.cleaned_data['phone_num']
-						, address = form['address'])
+						, address = form.cleaned_data['address'])
 					cprof.save()
 					setattr(u, 'profile', cprof)
 				else:
@@ -103,7 +102,7 @@ def edit_profile(request):
 				if u.profile is None:
 					uprof = Profile(degree = form.cleaned_data['degree'],
 						resume = form.cleaned_data['resume'], phone_num = form.cleaned_data['phone_num'],
-						address = form['address'])
+						address = form.cleaned_data['address'])
 					uprof.save()
 					u.profile = uprof
 				else:
@@ -120,3 +119,17 @@ def edit_profile(request):
 
 			return render(request, template, {'user':u})
 	return redirect('/')
+
+def view_map(request):
+	if request.method == 'GET':
+		form = MapRequestForm(request.GET)
+		if form.is_valid():
+			u = User.objects.filter(hashid = form.cleaned_data['hashid'])
+			u = u[0]
+
+			r = forms.cleaned_data['radius']
+			s = ''.join(x for x in r if x.isdigit())
+			
+
+
+	return render(request, "Map.html", {})

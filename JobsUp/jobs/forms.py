@@ -26,3 +26,7 @@ class ProfileForm(forms.Form):
 	website = forms.CharField(max_length = 200, required = False)
 	degree = forms.CharField(max_length = 200, required = False)
 	resume = forms.CharField(max_length = 200, required = False)
+
+class MapRequestForm(forms.Form):
+	hashid = forms.CharField(max_length = 200, required = True)
+	radius = forms.CharField(max_length = 200, required = True)
