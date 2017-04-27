@@ -122,14 +122,18 @@ def edit_profile(request):
 
 def view_map(request):
 	if request.method == 'GET':
+		u = {}
+		c = {}
+		s = ''
 		form = MapRequestForm(request.GET)
 		if form.is_valid():
 			u = User.objects.filter(hashid = form.cleaned_data['hashid'])
 			u = u[0]
 
-			r = forms.cleaned_data['radius']
+			r = form.cleaned_data['radius']
 			s = ''.join(x for x in r if x.isdigit())
-			
+			c = Company.objects.all()
 
 
-	return render(request, "Map.html", {})
+	context = {'user': u, 'company': c, 'radius':s}
+	return render(request, "Map.html", context)
