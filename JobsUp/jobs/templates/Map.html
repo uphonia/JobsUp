@@ -46,6 +46,10 @@
             width: 100%;
             height: 560px;
         }
+        
+        .logout {
+            margin-top: 5px;
+        }
     </style>
     <head>
         <title> Search | JobsUp </title>
@@ -64,7 +68,7 @@
 		                <a href="~/../UserProfiles.html"><span class="glyphicon glyphicon-user"></span> Employee </a>
 		            </li>  
 		            <li class="logout" style="text-align:right;">
-		                <a herf="">Logout</a>
+		                <button class="logout" type = "submit">Logout</button>
 		            </li> 
 		        </ul>
 		    </div>
@@ -225,6 +229,9 @@
         <script>
             // Puts a marker on the map based on latitude and longitude values
             var map, infoWindow;
+            var markers = [];
+            var locationSelect;
+            
             function initMap() {
                 var uluru = {lat: 40.7128, lng: -74.0059};
                 map = new google.maps.Map(document.getElementById('map'), {
@@ -232,6 +239,7 @@
                   center: uluru
                 });
                 infoWindow = new google.maps.InfoWindow;
+                
                 var marker = new google.maps.Marker({
                   position: uluru,
                   map: map
@@ -258,8 +266,29 @@
                 }else{
                     handleLocationError(false, infoWindow, map.getCenter());
                 }
+                
+                var infowindow = new google.maps.InfoWindow({
+                    content: contentString
+                });
+            
+                var contentString = '<div id="content">'+
+                '<div id="siteNotice">'+
+                '</div>'+
+                '<h1 id="firstHeading" class="firstHeading">Company Name</h1>'+
+                '<div id="bodyContent">'+
+                '<p> <b>Job Position: </b> </p> <p><b>Contact: </b></p>'+
+                '</div>'+
+                '</div>';
+            
+                marker.addListener('mouseover', function() {
+                    infowindow.open(map, marker);
+                });
+            
+                marker.addListener('mouseout', function() {
+                    infowindow.close();
+                });
             }
-
+            
             function handleLocationError(browserHasGeolocation, infoWindow, pos){
                 infoWindow.setPosition(pos);
                 infoWindow.setContent(browserHasGeolocation ? 
@@ -267,6 +296,102 @@
                     'Error: Browser does not support geolocation.');
                 infoWindow.open(map);
             }
+            
+            // change IDs/variable names, to match form stuff
+            function searchLocations() {
+                var zipcode = document.getElementById("zipcode").value;
+                var geocoder = new google.maps.Geocoder();
+                geocoder.geocode({address: address}, function(results, status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        searchLocationsNear(results[0].geometry.location);
+                    } else {
+                        alert(zipcode + ' not found');
+                    }
+                });
+            }
+            
+            function clearLocations() {
+                infoWindow.close();
+                for (var i = 0; i < markers.length; i++) {
+                    markers[i].setMap(null);
+                }
+                
+                markers.length = 0;
+            }
+            
+            // change IDs/variable names, to match form stuff
+            function searchLocationsNear(center) {
+                clearLocations();
+                
+                var radius = document.getElementById('radiusSelect').value;
+                var searchUrl = 'storelocator.php?lat=' + center.lat() + '&lng=' + center.lng() + '&radius=' + radius;
+                downloadUrl(searchUrl, function(data) {
+                   var xml = parseXml(data);
+                   var markerNodes = xml.documentElement.getElementsByTagName("marker");
+                   var bounds = new google.maps.LatLngBounds();
+                   for (var i = 0; i < markerNodes.length; i++) {
+                         var id = markerNodes[i].getAttribute("id");
+                         var name = markerNodes[i].getAttribute("name");
+                         var address = markerNodes[i].getAttribute("address");
+                         var distance = parseFloat(markerNodes[i].getAttribute("distance"));
+                         var latlng = new google.maps.LatLng(
+                              parseFloat(markerNodes[i].getAttribute("lat")),
+                              parseFloat(markerNodes[i].getAttribute("lng"))
+                         );
+
+                         //createOption(name, distance, i);
+                         createMarker(latlng, name, address);
+                         bounds.extend(latlng);
+                    }
+                    
+                   map.fitBounds(bounds);
+                   locationSelect.style.visibility = "visible";
+                   locationSelect.onchange = function() {
+                        var markerNum = locationSelect.options[locationSelect.selectedIndex].value;
+                        google.maps.event.trigger(markers[markerNum], 'click');
+                    };
+                });
+            };
+            
+            function createMarker(latlng, name, address) {
+              var html = "<b>" + name + "</b> <br/>" + address;
+              var marker = new google.maps.Marker({
+                map: map,
+                position: latlng
+              });
+              google.maps.event.addListener(marker, 'click', function() {
+                infoWindow.setContent(html);
+                infoWindow.open(map, marker);
+              });
+              markers.push(marker);
+            }
+            
+            // dunno if we need this but ill paste it here in case
+            function downloadUrl(url, callback) {
+              var request = window.ActiveXObject ?
+                  new ActiveXObject('Microsoft.XMLHTTP') :
+                  new XMLHttpRequest;
+
+              request.onreadystatechange = function() {
+                if (request.readyState == 4) {
+                  request.onreadystatechange = doNothing;
+                  callback(request.responseText, request.status);
+                }
+              };
+
+              request.open('GET', url, true);
+              request.send(null);
+           }
+
+       function parseXml(str) {
+          if (window.ActiveXObject) {
+            var doc = new ActiveXObject('Microsoft.XMLDOM');
+            doc.loadXML(str);
+            return doc;
+          } else if (window.DOMParser) {
+            return (new DOMParser).parseFromString(str, 'text/xml');
+          }
+       }
         </script>
         
         <!-- Using Google Maps API --> 
