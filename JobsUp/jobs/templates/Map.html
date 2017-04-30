@@ -75,13 +75,13 @@
 	    </nav>
 	    
 	    <div class="container">
+	        <!--
 	        <div class="row">
 	        
-	            <!-- Search Filter Panel Left Container-->
 	            <div class="col-lg-2">
                     <div class="left">
                         <div class="panel panel-default" >
-                            <!--<h1> Search Filter </h1>
+                            <h1> Search Filter </h1>
                             <form action="/action_page.php" method="get">
                                 <div class="panel-body" style="height:480px;margin-top:-20px;">
                                 
@@ -209,18 +209,15 @@
                 </div> <!-- End of left container -->
                 
                 <!-- Map container --> 
-                <div class="col-lg-10">  
-                    <div class="map-container">
-                        <div class="panel panel-default" >
-                            <div class="panel-body" style="height:580px;">
+                        <!--<div class="panel panel-default" >
+                            <div class="panel-body" style="height:580px;"> -->
                                 <!-- initMap is called inside this div to produce the map -->
-                                <div id="map">
+                                <div id="map" style="margin-top: 60px; width: 1230px; margin-left: 10px;">
                                     
                                 </div>
+                                <!--
                             </div>
-                        </div>
-                    </div> 
-                </div> <!-- End of right container -->
+                        </div> -->
                 
             </div> <!-- End of row div -->
         </div> <!-- End of whole container div -->
@@ -266,7 +263,7 @@
                     }, function(){
                         handelLocationError(true, infoWindow, map.getCenter());
                     });
-                }else{
+                } else{
                     handleLocationError(false, infoWindow, map.getCenter());
                 }
                 
