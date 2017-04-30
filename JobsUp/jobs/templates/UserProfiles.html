@@ -180,6 +180,18 @@
 		            infoWindow.setContent('s3nd nud3s.');
 		            infoWindow.open(map);
 		            map.setCenter(pos);
+
+                            console.log(position.coords.latitude - .0001);
+                            var myLatLng = {
+                                lat: position.coords.latitude  - 0.0001,
+                                lng: position.coords.longitude
+                            }
+
+                            var marker = new google.maps.Marker({
+                                    position: myLatLng,
+                                    map: map,
+                                    title: 'Hello World!'
+                            });
 		          }, function() {
 		            handleLocationError(true, infoWindow, map.getCenter());
 		          });
@@ -187,6 +199,7 @@
 		          // Browser doesn't support Geolocation
 		          handleLocationError(false, infoWindow, map.getCenter());
 		        }
+
 		      }
 
 		      function handleLocationError(browserHasGeolocation, infoWindow, pos) {
