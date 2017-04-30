@@ -212,7 +212,7 @@
                         <!--<div class="panel panel-default" >
                             <div class="panel-body" style="height:580px;"> -->
                                 <!-- initMap is called inside this div to produce the map -->
-                                <div id="map" style="margin-top: 60px; width: 1230px; margin-left: 10px;">
+                                <div id="map" style="margin-top: 60px; width: 1220px; margin-left: 10px;">
                                     
                                 </div>
                                 <!--
@@ -323,7 +323,7 @@
             function searchLocationsNear(center) {
                 clearLocations();
                 
-                var radius = parseInt({{radius}});
+
                 var searchUrl = 'storelocator.php?lat=' + center.lat() + '&lng=' + center.lng() + '&radius="{{radius}}"';
                 downloadUrl(searchUrl, function(data) {
                    var xml = parseXml(data);
