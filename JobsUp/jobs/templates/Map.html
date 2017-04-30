@@ -227,8 +227,10 @@
                 
         <!-- Map API -->
         <script>
+
+
             // Puts a marker on the map based on latitude and longitude values
-            var companies = {{comp|safe}}
+            var companies = {{ company|safe }}
             var map, infoWindow;
             var markers = [];
             var content = [];
@@ -270,18 +272,21 @@
                     handleLocationError(false, infoWindow, map.getCenter());
                 }
                 
-                var infowindow = new google.maps.InfoWindow({
-                    content: contentString
-                });
             
                 var contentString = '<div id="content">'+
                 '<div id="siteNotice">'+
                 '</div>'+
-                '<h1 id="firstHeading" class="firstHeading">{{c[0].profile.company_name}}</h1>'+
+                '<h1 id="firstHeading" class="firstHeading">{{ company }}</h1>'+
+
                 '<div id="bodyContent">'+
                 '<p> <b>Job Position: </b> </p> <p><b>Contact: </b></p>'+
                 '</div>'+
                 '</div>';
+
+                var infowindow = new google.maps.InfoWindow({
+                    content: contentString
+                });
+
             
                 marker.addListener('mouseover', function() {
                     infowindow.open(map, marker);
@@ -397,12 +402,9 @@
             return (new DOMParser).parseFromString(str, 'text/xml');
           }
        }
-        </script>
+        </script defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBJzcnEVhOL2N5QLhNrYiWwbVLSLzNPsDg&callback=initMap">
         
         <!-- Using Google Maps API --> 
-        <script async defer 
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBJzcnEVhOL2N5QLhNrYiWwbVLSLzNPsDg&callback=initMap">
-        </script>
         
     </body> 
 </html>
