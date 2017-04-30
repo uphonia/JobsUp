@@ -123,7 +123,7 @@ def edit_profile(request):
 def view_map(request):
 	if request.method == 'GET':
 		user = {}
-		c = {}
+		#c = {}
 		radius = ''
 		form = MapRequestForm(request.GET)
 		if form.is_valid():
