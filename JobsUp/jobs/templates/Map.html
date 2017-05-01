@@ -225,13 +225,18 @@
         <!-- Map API -->
         <script>
             // Puts a marker on the map based on latitude and longitude values
-            //var companies = {{comp|safe}}
+            var companies = {{company|safe}};
+            var radius = "{{radius|safe}}";
             var map, infoWindow;
             var markers = [];
             var content = [];
             var locationSelect;
             
             function initMap() {
+                console.log(radius);
+                {% for c in companies %}
+                    console.log({{c.profile.address}});
+                {% endfor %}
                 var newyork = {lat: 40.7128, lng: -74.0059};
                 map = new google.maps.Map(document.getElementById('map'), {
                   zoom: 15,
@@ -240,13 +245,13 @@
                 
                 infoWindow = new google.maps.InfoWindow;
                 
-                locationSelect = document.getElementById("locationSelect");
+                /*locationSelect = document.getElementById("locationSelect");
                 locationSelect.onchange = function() {
                     var markerNum = locationSelect.options[locationSelect.selectedIndex].value;
                     if (markerNum != "none") {
                         google.maps.event.trigger(markers[markerNum], 'click');
                     }
-                };
+                };*/
             
                 var marker = new google.maps.Marker({
                   position: newyork,
@@ -268,7 +273,6 @@
                         });
                         infoWindow.open(map);
                         map.setCenter(pos);
-                        SearchLocationsNear(pos);
                     }, function(){
                         handelLocationError(true, infoWindow, map.getCenter());
                     });
@@ -277,17 +281,10 @@
                 }
                 
                 var infowindow = new google.maps.InfoWindow({
-                    content: contentString
+                    //content: contentString
                 });
             
-                var contentString = '<div id="content">'+
-                '<div id="siteNotice">'+
-                '</div>'+
-                '<h1 id="firstHeading" class="firstHeading">{{comp.profile.company_name}}</h1>'+
-                '<div id="bodyContent">'+
-                '<p> <b>Job Position: </b> </p> <p><b>Contact: </b></p>'+
-                '</div>'+
-                '</div>';
+                
             
                 marker.addListener('mouseover', function() {
                     infowindow.open(map, marker);
@@ -297,7 +294,7 @@
                     infowindow.close();
                 });
                 
-                google.maps.event.addListenerOnce(map, 'tilesLoaded', addMarkers);
+                //google.maps.event.addListenerOnce(map, 'tilesLoaded', addMarkers);
             }
             
             function handleLocationError(browserHasGeolocation, infoWindow, pos){
@@ -323,15 +320,7 @@
                 */
                 
                 
-                var address = document.getElementById("{{company.profile.address}}").value;
-                var geocoder = new google.maps.Geocoder();
-                geocoder.geocode({address: address}, function(results, status) {
-                    if (status == google.maps.GeocoderStatus.OK) {
-                        searchLocationsNear(results[0].geometry.location);
-                    } else {
-                        alert(address + ' not found');
-                    }
-                });         
+                
             }
             
             function clearLocations() {
@@ -343,7 +332,7 @@
                 markers.length = 0;
             }
             
-            function createMarker(latlng, name, address) {
+            /*function createMarker(latlng, name, address) {
               var html = "<b>" + name + "</b> <br/>" + address;
               var marker = new google.maps.Marker({
                 map: map,
@@ -354,23 +343,36 @@
                 infoWindow.open(map, marker);
               });
               markers.push(marker);
-            }
+            }*/
             
             // in theory, goes through all the companies and puts markers for all of them 
             function addMarkers() {
-                 {% for mark in companies %}
-                    console.log(mark.position.latitude);
-                    var point = new google.maps.LatLng({{mark.position.latitude}},{{mark.position.longitude}});
-                        var marker = new google.maps.Marker({
-                        position: point,
-                        map: map,
-                    });
+                var close = false;
+                 {% for c in companies %}
+                    close = false;
+                    console.log({{c.profile.address}});
+                    var add = {{c.profile.address}};
+                    var geocoder = new google.maps.Geocoder();
+                    geocoder.geocode({address: add}, function(results, status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        close = searchLocationsNear(results[0].geometry.location);
+                    } else {
+                        alert(address + ' not found');
+                        close = false;
+                    }
+                    if(close == true){
+                        var point = new google.maps.LatLng({{mark.position.latitude}},{{mark.position.longitude}});
+                            var marker = new google.maps.Marker({
+                            position: point,
+                            map: map,
+                        });
                     
-                    marker['infowindow'] = new google.maps.InfoWindow({
-                        content: "this is a company marker",
-                    })
+                        marker['infowindow'] = new google.maps.InfoWindow({
+                            content: "this is a company marker",
+                        })
                     
-                    markers.push(mark);
+                        markers.push(mark);
+                    }
                 {% endfor %}
             }
                 

@@ -8,6 +8,9 @@ from django.core import serializers
 from .forms import SignUpForm, LogInForm, ProfileForm, MapRequestForm
 from .models import Profile, Company, User, Application
 
+import json
+from django.core import serializers
+
 # Create your views here.
 @csrf_exempt
 def index(request):
@@ -95,7 +98,6 @@ def edit_profile(request):
 					setattr(u.profile, 'company_name', form.cleaned_data['company_name'])
 					setattr(u.profile, 'website', form.cleaned_data['website'])
 					setattr(u.profile, 'phone_num', form.cleaned_data['phone_num'])
-					setattr(u.profile, 'address', form.cleaned_data['address'])
 					u.profile.save()
 				#u.profile = cprof
 			elif temp == 1:
@@ -110,11 +112,14 @@ def edit_profile(request):
 					setattr(u.profile, 'degree', form.cleaned_data['degree'])
 					setattr(u.profile, 'resume', form.cleaned_data['resume'])
 					setattr(u.profile, 'phone_num', form.cleaned_data['phone_num'])
-					setattr(u.profile, 'address', form.cleaned_data['address'])
 					u.profile.save()
 				setattr(u, 'first_name', form.cleaned_data['first_name'])
 				setattr(u, 'last_name', form.cleaned_data['last_name'])
 			setattr(u, 'email', form.cleaned_data['email'])
+			setattr(u, 'str_address', form.cleaned_data['str_address'])
+			setattr(u, 'city', form.cleaned_data['city'])
+			setattr(u, 'state', form.cleaned_data['state'])
+			setattr(u, 'zipcode', form.cleaned_data['zipcode'])
 
 			u.save();
 
@@ -135,8 +140,9 @@ def view_map(request):
 			radius = ''.join(x for x in r if x.isdigit())
 			comp = Company.objects.all()
 
-
-	context = {'user': user, 'company': comp, 'radius':radius}
+	company = serializers.serialize('json', comp)
+	context = {'user': user, 'company': company, 'radius':radius}
+	#json_context = json.dumps(context)
 	return render(request, "Map.html", context)
 
 # for viewing profile from map
