@@ -64,11 +64,13 @@
 	                <li class="home">
 		                <a href=""><span class=""></span> JobsUp </a>
                     </li> 
-                    <li class="profile" style="margin-left:800px;">
+                    <li class="profile" style="margin-left:750px;">
 		                <a href="~/../UserProfiles.html"><span class="glyphicon glyphicon-user"></span> Employee </a>
 		            </li>  
 		            <li class="logout" style="text-align:right;">
-		                <button class="logout" type = "submit">Logout</button>
+		              <form class="logout" style="padding-top:0px;" action = "/log_out" method = "GET">
+                        <button class="logout" type = "submit">Logout</button>
+                      </form> 
 		            </li> 
 		        </ul>
 		    </div>
@@ -225,7 +227,11 @@
         <!-- Map API -->
         <script>
             // Puts a marker on the map based on latitude and longitude values
-            var companies = {{company|safe}};
+            {% for c in company%}
+                var add = "{{c.str_address}}" + " " + "{{c.city}}" + ", " + "{{c.state}}" + " " + "{{c.zipcode}}";
+                console.log(add);
+            {% endfor %}
+            //console.log({{company}});
             var radius = "{{radius|safe}}";
             var map, infoWindow;
             var markers = [];
@@ -234,9 +240,11 @@
             
             function initMap() {
                 console.log(radius);
-                {% for c in companies %}
-                    console.log({{c.profile.address}});
-                {% endfor %}
+                //console.log(companies[0].name);
+                /*for (var i = 0; i < companies.length;i++){
+                    console.log(companies[i].str_address);
+
+                }*/
                 var newyork = {lat: 40.7128, lng: -74.0059};
                 map = new google.maps.Map(document.getElementById('map'), {
                   zoom: 15,
@@ -266,7 +274,7 @@
                         };
 
                         infoWindow.setPosition(pos);
-                        infoWindow.setContent('Location found.');
+                        infoWindow.setContent('You are here');
                         marker = new google.maps.Marker({
                             position: pos,
                             map: map
@@ -346,12 +354,11 @@
             }*/
             
             // in theory, goes through all the companies and puts markers for all of them 
-            function addMarkers() {
+            /*function addMarkers() {
                 var close = false;
-                 {% for c in companies %}
-                    close = false;
-                    console.log({{c.profile.address}});
-                    var add = {{c.profile.address}};
+                 {% for c in company %}
+                    //close = false;
+                    var add = "{{c.address}}" + " {{c.city}}, " + "{{c.state}} " + "{{c.zipcode}}";
                     var geocoder = new google.maps.Geocoder();
                     geocoder.geocode({address: add}, function(results, status) {
                     if (status == google.maps.GeocoderStatus.OK) {
@@ -374,7 +381,7 @@
                         markers.push(mark);
                     }
                 {% endfor %}
-            }
+            }*/
                 
         </script>
         

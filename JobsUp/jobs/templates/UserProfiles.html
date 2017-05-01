@@ -77,11 +77,11 @@
                                 <input type="text" id="email" name = "email" value = {{user.email}} style = "width:400px;"><br>
                 
                                 <label for="phone-num"> Phone Number </label> <br> 
-                                <input type="text" id="phone-number" name = "phone_num" value = "{{user.profile.phone_num}}" style = "width:400px;"><br>
+                                <input type="text" id="phone-number" name = "phone_num" value = "{{user.phone_num}}" style = "width:400px;"><br>
                 
                                 <label for="degree"> Educational Degree </label> <br> 
                                 <select class="btn btn-default dropdown-toggle" data-toggle="dropdown" style="text-align: left" name = "degree">
-                                    <option>{{user.profile.degree}}</option>
+                                    <option>{{user.degree}}</option>
                                     <option>Associates</option>
                                     <option>Bachelors</option>
                                     <option>Masters</option>
@@ -102,7 +102,7 @@
                                 <input type="text" id="address" name = "zipcode" value = "{{user.zipcode}}" style = "width:400px;"><br>
                     
                                 <label for="resume"> Resume link </label> <br> 
-                                <input type="text" id="resume" name = "resume" value = "{{user.profile.resume}}" style = "width:400px;"><br>
+                                <input type="text" id="resume" name = "resume" value = "{{user.resume}}" style = "width:400px;"><br>
                                 <br>
                                 <input class="button" type = "submit" value = "Save">   
                             </div>

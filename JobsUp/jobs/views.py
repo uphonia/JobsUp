@@ -2,11 +2,10 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
-from django.contrib.auth import login, authenticate, logout
 from django.core import serializers
 
 from .forms import SignUpForm, LogInForm, ProfileForm, MapRequestForm
-from .models import Profile, Company, User, Application
+from .models import Company, Individual, Application
 
 import json
 from django.core import serializers
@@ -43,7 +42,7 @@ def sign_up(request):
 				template = 'UserProfiles.html'
 				query = User.objects.filter(hashid = user['hashid'])
 				if len(query) == 0:
-					u = User(** user)
+					u = Individual(** user)
 					u.save()
 				else:
 					return redirect('index')
@@ -60,7 +59,7 @@ def log_in(request):
 		if form.is_valid():
 			u = Company.objects.filter(hashid = str(len(form.cleaned_data['username'] + form.cleaned_data['password'])) + str(form.cleaned_data['username'] + form.cleaned_data['password']))
 			if(len(u) == 0):
-				u = User.objects.filter(hashid = str(len(form.cleaned_data['username'] + form.cleaned_data['password'])) + str(form.cleaned_data['username'] + form.cleaned_data['password']))
+				u = Individual.objects.filter(hashid = str(len(form.cleaned_data['username'] + form.cleaned_data['password'])) + str(form.cleaned_data['username'] + form.cleaned_data['password']))
 				if(len(u) == 0):
 					return redirect('index')
 				else:
@@ -68,6 +67,7 @@ def log_in(request):
 			else:
 				template = "CompanyProfiles.html"
 			u = u[0]
+			print(u.hashid)
 			return render(request, template, {'user':u})
 	return redirect('index')
 
@@ -76,45 +76,41 @@ def log_out(request):
 
 def edit_profile(request):
 	temp = 0
+	u = {}
 	template = ""
 	if request.method == 'POST':
 		form = ProfileForm(request.POST)
+		print(form)
+		print ("\n")
 		if form.is_valid():
-			u = Company.objects.filter(hashid = form.cleaned_data['hashid'])
+			try:
+				print(form.cleaned_data['hashid'])
+				print("\n")
+				u = Company.objects.filter(hashid = form.cleaned_data['hashid'])
+			except Company.DoesNotExist:
+				u = None
+				return redirect('/')
 			if(len(u) == 0):
 				temp = 1
-				u = User.objects.filter(hashid = form.cleaned_data['hashid'])
+				try:
+					u = Individual.objects.filter(hashid = form.cleaned_data['hashid'])
+				except Individual.DoesNotExist:
+					u = None
+					return redirect('/')
 			u = u[0]
-			print('Address' + form.cleaned_data['address'])
 			if temp == 0:
 				template = "CompanyProfiles.html"
-				if u.profile is None:
-					cprof = Profile(company_name = form.cleaned_data['company_name'],
-						website = form.cleaned_data['website'], phone_num = form.cleaned_data['phone_num']
-						, address = form.cleaned_data['address'])
-					cprof.save()
-					setattr(u, 'profile', cprof)
-				else:
-					setattr(u.profile, 'company_name', form.cleaned_data['company_name'])
-					setattr(u.profile, 'website', form.cleaned_data['website'])
-					setattr(u.profile, 'phone_num', form.cleaned_data['phone_num'])
-					u.profile.save()
-				#u.profile = cprof
+				setattr(u, 'company_name', form.cleaned_data['company_name'])
+				setattr(u, 'website', form.cleaned_data['website'])
+				setattr(u, 'phone_num', form.cleaned_data['phone_num'])
 			elif temp == 1:
 				template = "UserProfiles.html"
-				if u.profile is None:
-					uprof = Profile(degree = form.cleaned_data['degree'],
-						resume = form.cleaned_data['resume'], phone_num = form.cleaned_data['phone_num'],
-						address = form.cleaned_data['address'])
-					uprof.save()
-					u.profile = uprof
-				else:
-					setattr(u.profile, 'degree', form.cleaned_data['degree'])
-					setattr(u.profile, 'resume', form.cleaned_data['resume'])
-					setattr(u.profile, 'phone_num', form.cleaned_data['phone_num'])
-					u.profile.save()
+				setattr(u, 'degree', form.cleaned_data['degree'])
+				setattr(u, 'resume', form.cleaned_data['resume'])
+				setattr(u, 'phone_num', form.cleaned_data['phone_num'])
 				setattr(u, 'first_name', form.cleaned_data['first_name'])
 				setattr(u, 'last_name', form.cleaned_data['last_name'])
+
 			setattr(u, 'email', form.cleaned_data['email'])
 			setattr(u, 'str_address', form.cleaned_data['str_address'])
 			setattr(u, 'city', form.cleaned_data['city'])
@@ -133,14 +129,20 @@ def view_map(request):
 		radius = ''
 		form = MapRequestForm(request.GET)
 		if form.is_valid():
-			user = User.objects.filter(hashid = form.cleaned_data['hashid'])
+			user = Individual.objects.filter(hashid = form.cleaned_data['hashid'])
 			user = user[0]
 
 			r = form.cleaned_data['radius']
 			radius = ''.join(x for x in r if x.isdigit())
 			comp = Company.objects.all()
+			
 
-	company = serializers.serialize('json', comp)
+	company = []
+	length = 0
+	#company = serializers.serialize('json', comp)
+	for c in comp:
+		company.insert(0, comp[length])
+		length = length+1
 	context = {'user': user, 'company': company, 'radius':radius}
 	#json_context = json.dumps(context)
 	return render(request, "Map.html", context)
@@ -151,7 +153,7 @@ def view_profile(request):
         user = {}
         form = ProfileForm(request.GET)
         if form.is_valid():
-            user = User.objects.filter(hashid = form.cleaned_data['hashid'])
+            user = Individual.objects.filter(hashid = form.cleaned_data['hashid'])
             user = user[0]
             
     context = {'user': user}
