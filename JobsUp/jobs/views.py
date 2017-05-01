@@ -3,6 +3,7 @@ from django.shortcuts import redirect
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 from django.contrib.auth import login, authenticate, logout
+from django.core import serializers
 
 from .forms import SignUpForm, LogInForm, ProfileForm, MapRequestForm
 from .models import Profile, Company, User, Application
@@ -123,7 +124,7 @@ def edit_profile(request):
 def view_map(request):
 	if request.method == 'GET':
 		user = {}
-		#c = {}
+		comp = {}
 		radius = ''
 		form = MapRequestForm(request.GET)
 		if form.is_valid():
@@ -137,3 +138,25 @@ def view_map(request):
 
 	context = {'user': user, 'company': comp, 'radius':radius}
 	return render(request, "Map.html", context)
+
+# for viewing profile from map
+def view_profile(request):
+    if request.method == 'GET':
+        user = {}
+        form = ProfileForm(request.GET)
+        if form.is_valid():
+            user = User.objects.filter(hashid = form.cleaned_data['hashid'])
+            user = user[0]
+            
+    context = {'user': user}
+    return render(request, "UserProfiles.html", context)
+    
+def showCompanies(request):
+    companies = Company.objects.all()
+    return render_to_response('Map.html', {"companies": companies})
+    
+def showCompDetail(request, comp_id):
+    companies = Company.objects.get(id=comp_id)
+    return render_to_response('Map.html', {"companies": companies})
+    
+    

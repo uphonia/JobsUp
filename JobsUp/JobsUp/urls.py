@@ -27,5 +27,6 @@ urlpatterns = [
 	url(r'^log_out/$', jobs.views.log_out, name = 'logout'),
 	url(r'^edit_profile/$', jobs.views.edit_profile, name = 'edit'),
 	url(r'^view_map/$', jobs.views.view_map, name = 'mapview'),
+    url(r'^view_profile/$', jobs.views.view_profile, name = 'profile'),
     url(r'^admin/', admin.site.urls),
 ]

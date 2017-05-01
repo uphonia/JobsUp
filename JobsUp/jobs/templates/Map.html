@@ -212,7 +212,7 @@
                         <!--<div class="panel panel-default" >
                             <div class="panel-body" style="height:580px;"> -->
                                 <!-- initMap is called inside this div to produce the map -->
-                                <div id="map" style="margin-top: 60px; width: 1200px; margin-left: 60px;">
+                                <div id="map" style="margin-top: 60px; width: 1200px; margin-left: 30px;">
                                     
                                 </div>
                                 <!--
@@ -232,15 +232,24 @@
             var locationSelect;
             
             function initMap() {
-                var uluru = {lat: 40.7128, lng: -74.0059};
+                var newyork = {lat: 40.7128, lng: -74.0059};
                 map = new google.maps.Map(document.getElementById('map'), {
                   zoom: 15,
-                  center: uluru
+                  center: newyork
                 });
+                
                 infoWindow = new google.maps.InfoWindow;
                 
+                locationSelect = document.getElementById("locationSelect");
+                locationSelect.onchange = function() {
+                    var markerNum = locationSelect.options[locationSelect.selectedIndex].value;
+                    if (markerNum != "none") {
+                        google.maps.event.trigger(markers[markerNum], 'click');
+                    }
+                };
+            
                 var marker = new google.maps.Marker({
-                  position: uluru,
+                  position: newyork,
                   map: map
                 });
 
@@ -274,7 +283,7 @@
                 var contentString = '<div id="content">'+
                 '<div id="siteNotice">'+
                 '</div>'+
-                '<h1 id="firstHeading" class="firstHeading">{{c[0].profile.company_name}}</h1>'+
+                '<h1 id="firstHeading" class="firstHeading">{{comp.profile.company_name}}</h1>'+
                 '<div id="bodyContent">'+
                 '<p> <b>Job Position: </b> </p> <p><b>Contact: </b></p>'+
                 '</div>'+
@@ -287,6 +296,8 @@
                 marker.addListener('mouseout', function() {
                     infowindow.close();
                 });
+                
+                google.maps.event.addListenerOnce(map, 'tilesLoaded', addMarkers);
             }
             
             function handleLocationError(browserHasGeolocation, infoWindow, pos){
@@ -299,6 +310,7 @@
             
             // change IDs/variable names, to match form stuff
             function searchLocations() {
+                /*
                 var zipcode = document.getElementById("zipcode").value;
                 var geocoder = new google.maps.Geocoder();
                 geocoder.geocode({address: address}, function(results, status) {
@@ -308,6 +320,18 @@
                         alert(zipcode + ' not found');
                     }
                 });
+                */
+                
+                
+                var address = document.getElementById("{{company.profile.address}}").value;
+                var geocoder = new google.maps.Geocoder();
+                geocoder.geocode({address: address}, function(results, status) {
+                    if (status == google.maps.GeocoderStatus.OK) {
+                        searchLocationsNear(results[0].geometry.location);
+                    } else {
+                        alert(address + ' not found');
+                    }
+                });         
             }
             
             function clearLocations() {
@@ -318,42 +342,6 @@
                 
                 markers.length = 0;
             }
-            
-            // change IDs/variable names, to match form stuff
-            function searchLocationsNear(center) {
-                clearLocations();
-                
-                //var radius = parseInt({{radius}});
-                var searchUrl = 'storelocator.php?lat=' + center.lat() + '&lng=' + center.lng() + '&radius="{{radius}}"';
-                downloadUrl(searchUrl, function(data) {
-                   var xml = parseXml(data);
-                   var markerNodes = xml.documentElement.getElementsByTagName("marker");
-                   var bounds = new google.maps.LatLngBounds();
-                   for(var i = 0; i < companies.length; i++){
-                   for (var i = 0; i < markerNodes.length; i++) {
-                         var id = markerNodes[i].getAttribute("id");
-                         var name = markerNodes[i].getAttribute("name");
-                         var address = markerNodes[i].getAttribute("address");
-                         var distance = parseFloat(markerNodes[i].getAttribute("distance"));
-                         var latlng = new google.maps.LatLng(
-                              parseFloat(markerNodes[i].getAttribute("lat")),
-                              parseFloat(markerNodes[i].getAttribute("lng"))
-                         );
-
-                         //createOption(name, distance, i);
-                         createMarker(latlng, name, address);
-                         bounds.extend(latlng);
-                    }
-                    
-                   map.fitBounds(bounds);
-                   locationSelect.style.visibility = "visible";
-                   locationSelect.onchange = function() {
-                        var markerNum = locationSelect.options[locationSelect.selectedIndex].value;
-                        google.maps.event.trigger(markers[markerNum], 'click');
-                    };
-                }
-                });
-            };
             
             function createMarker(latlng, name, address) {
               var html = "<b>" + name + "</b> <br/>" + address;
@@ -368,32 +356,24 @@
               markers.push(marker);
             }
             
-            // dunno if we need this but ill paste it here in case
-            function downloadUrl(url, callback) {
-              var request = window.ActiveXObject ?
-                  new ActiveXObject('Microsoft.XMLHTTP') :
-                  new XMLHttpRequest;
-
-              request.onreadystatechange = function() {
-                if (request.readyState == 4) {
-                  request.onreadystatechange = doNothing;
-                  callback(request.responseText, request.status);
-                }
-              };
-
-              request.open('GET', url, true);
-              request.send(null);
-           }
-
-       function parseXml(str) {
-          if (window.ActiveXObject) {
-            var doc = new ActiveXObject('Microsoft.XMLDOM');
-            doc.loadXML(str);
-            return doc;
-          } else if (window.DOMParser) {
-            return (new DOMParser).parseFromString(str, 'text/xml');
-          }
-       }
+            // in theory, goes through all the companies and puts markers for all of them 
+            function addMarkers() {
+                 {% for mark in companies %}
+                    console.log(mark.position.latitude);
+                    var point = new google.maps.LatLng({{mark.position.latitude}},{{mark.position.longitude}});
+                        var marker = new google.maps.Marker({
+                        position: point,
+                        map: map,
+                    });
+                    
+                    marker['infowindow'] = new google.maps.InfoWindow({
+                        content: "this is a company marker",
+                    })
+                    
+                    markers.push(mark);
+                {% endfor %}
+            }
+                
         </script>
         
         <!-- Using Google Maps API --> 

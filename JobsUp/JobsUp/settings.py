@@ -27,6 +27,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -37,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
-    'jobs'
+    'jobs',
+    "geoposition"
 ]
 
 MIDDLEWARE = [
@@ -101,7 +103,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/
 
@@ -115,6 +116,7 @@ USE_L10N = True
 
 USE_TZ = True
 
+GEOPOSITION_GOOGLE_MAPS_API_KEY = 'AIzaSyBJzcnEVhOL2N5QLhNrYiWwbVLSLzNPsDg'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.11/howto/static-files/

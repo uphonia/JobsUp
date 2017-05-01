@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
+from geoposition.fields import GeopositionField
 
 # Create your models here.
 

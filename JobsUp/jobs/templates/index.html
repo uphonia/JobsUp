@@ -15,26 +15,30 @@
 	    <nav class="navbar navbar-default navbar-static-top navbar-inverse navbar-fixed-top"> 
 	        <div class="container">
 	            <ul class="nav navbar-nav">
-	                <li class="home">
-		                <a href="/"><span class=""></span> JobsUp</a>
-                    </li>
+	                <div class="col-lg-1">
+                        <li class="home">
+                            <a href="/"  style="color: gray;"><span class=""></span> JobsUp</a>
+                        </li>
+                    </div>
                     {% csrf_token %}
-                    <div style = "display: inline-block;">
-                        <form action = "log_in/" method = "GET" style = "padding-top:10px; margin-left:600px;">
-                        <!--<li class="username-login">style = "padding-top:13px; margin-left:580px; "-->
-                            <input name = "username" type="text" placeholder="Username" style = "">
+                    <div class="col-lg-11"> 
+                        <div style = "display: inline-block; margin-left: 610px;" >
+                            <form action = "log_in/" method = "GET" style = "padding-top:10px;">
+                            <!--<li class="username-login">style = "padding-top:13px; margin-left:580px; "-->
+                                <input name = "username" type="text" placeholder="Username" style = "">
                         
-                            <!--<input name = "email" type="text" placeholder="Email">-->
-                        <!--</li>-->
-                        <!--<li class="password-login">style="padding-top:13px; margin-left:20px;"" -->
+                                <!--<input name = "email" type="text" placeholder="Email">-->
+                            <!--</li>-->
+                            <!--<li class="password-login">style="padding-top:13px; margin-left:20px;"" -->
                    
-                            <input name = "password" type="text" placeholder="Password" style = "">
+                                <input name = "password" type="text" placeholder="Password" style = "">
                        
-                        <!--</li>-->
-                        <button class="login" type = "submit">Log In</button>
+                            <!--</li>-->
+                            <button class="login" type = "submit">Log In</button>
                     
-                        </form>  
-                    </div>         
+                            </form>  
+                        </div>    
+                    </div>     
 		        </ul>
 		    </div>
 	    </nav>
