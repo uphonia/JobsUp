@@ -100,7 +100,10 @@
                 
                 <div class="col-lg-6">
                     <div class="right" >
-                        <a href="~/../Applicants.html" class="button"> View Applicants </a>
+                        <form action = "/applicants/"" method = "get">
+                            <input type="text" id="hashid" name="hashid" class="hidden" value={{user.hashid}}>
+                            <input class="button" value = "View Applicants" type = "submit">
+                        </form>
                     </div> <!-- End of right -->
                 </div> 
                                 

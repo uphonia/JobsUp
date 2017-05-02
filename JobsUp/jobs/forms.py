@@ -31,3 +31,6 @@ class ProfileForm(forms.Form):
 class MapRequestForm(forms.Form):
 	hashid = forms.CharField(max_length = 200, required = True)
 	radius = forms.CharField(max_length = 200, required = True)
+
+class ViewApplicationForm(forms.Form):
+	hashid = forms.CharField(max_length = 200, required = True)

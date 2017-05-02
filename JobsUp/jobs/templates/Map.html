@@ -233,6 +233,7 @@
             {% endfor %}
             //console.log({{company}});
             var radius = "{{radius|safe}}";
+            radius = radius * 1609.34;
             var map, infoWindow, infowindow;
             var information = [];
             var markers = [];
@@ -264,7 +265,8 @@
                         marker = new google.maps.Marker({
                             position: pos,
                             map: map,
-                            info: contentString
+                            info: contentString,
+                            hash: "{{user.hashid}}"
                         });
 
                         marker.addListener('mouseover', function(){
@@ -280,28 +282,39 @@
 
                         var close = true;
                         {% for c in company %}
-                            var add = "{{c.address}}" + " {{c.city}}, " + "{{c.state}} " + "{{c.zipcode}}";
+                            var add = "{{c.str_address}}" + " {{c.city}}, " + "{{c.state}} " + "{{c.zipcode}}";
                             var geocoder = new google.maps.Geocoder();
                             geocoder.geocode({address: add}, function(results, status) {
                                 if (status == google.maps.GeocoderStatus.OK) {
                                 //close = searchLocationsNear(results[0].geometry.location);
+                                    var from = new google.maps.LatLng(pos.lat, pos.lng);
+                                    var to = results[0].geometry.location;
+                                    var dist = google.maps.geometry.spherical.computeDistanceBetween(from, to);
+                                    if(dist < radius){
+                                        close = true;
+                                    }
+                                    else if(dist > radius){
+                                        close = false;
+                                    }
                                     if(close == true){
-                                        var conString = "<p>{{c.company_name}}</p>";
+                                        var conString = "<div><p>{{c.company_name}} <br>" + "{{c.str_address}}" + " {{c.city}}, " + "{{c.state}} " + "{{c.zipcode}}" + "</p>" + 
+                                            "<form action = '/sub_app/' method = 'post'><input class='button' value = 'Submit Application' type = 'submit'>" + "</div>";
                                         var marker = new google.maps.Marker({
                                             map: map,
                                             position: results[0].geometry.location,
-                                            info: conString
+                                            info: conString,
+                                            hash: "{{c.hashid}}"
                                         });
                                         content.push(conString);
 
-                                        marker.addListener('mouseover', function(){
+                                        marker.addListener('click', function(){
                                             infowindow.setContent(marker.info);
                                             infowindow.setPosition(marker.position);
                                             infowindow.open(map, marker);
                                         });
-                                        marker.addListener('mouseout', function(){
+                                        /*marker.addListener('mouseout', function(){
                                             infowindow.close();
-                                        });
+                                        });*/
                                         markers.push(marker);
                                     }
                                 } else {
@@ -338,60 +351,11 @@
                 
                 markers.length = 0;
             }
-            
-            /*function createMarker(latlng, name, address) {
-              var html = "<b>" + name + "</b> <br/>" + address;
-              var marker = new google.maps.Marker({
-                map: map,
-                position: latlng
-              });
-              google.maps.event.addListener(marker, 'click', function() {
-                infoWindow.setContent(html);
-                infoWindow.open(map, marker);
-              });
-              markers.push(marker);
-            }*/
-            
-            // in theory, goes through all the companies and puts markers for all of them 
-            function addMarkers() {
-                var close = true;
-                 {% for c in company %}
-                    var add = "{{c.address}}" + " {{c.city}}, " + "{{c.state}} " + "{{c.zipcode}}";
-                    var geocoder = new google.maps.Geocoder();
-                    geocoder.geocode({address: add}, function(results, status) {
-                    if (status == google.maps.GeocoderStatus.OK) {
-                        //close = searchLocationsNear(results[0].geometry.location);
-                        if(close == true){
-                            console.log(results[0].geometry.location);
-                            console.log(add);
-                            var marker = new google.maps.Marker({
-                                map: map,
-                                position: results[0].geometry.location
-                            });
-                            var contentString = "<p>{{c.company_name}}</p>";
-                            content.push(contentString);
-                            markers.push(marker);
-                            markers[markers.length-1].addListener('mouseover', function() {
-                                infowindow.setContent(content[markers.length-1])
-                                infowindow.open(map, markers[markers.length-1]);
-                            });
-
-                            markers[markers.length-1].addListener('mouseout', function() {
-                                infowindow.close();
-                            });
-                        }
-                    } else {
-                        alert(address + ' not found, Geocode was not successful');
-                        close = false;
-                    }
-                });
-                {% endfor %}
-        }
         </script>
         
         <!-- Using Google Maps API --> 
         <script async defer 
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBJzcnEVhOL2N5QLhNrYiWwbVLSLzNPsDg&callback=initMap">
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBJzcnEVhOL2N5QLhNrYiWwbVLSLzNPsDg&callback=initMap&libraries=geometry">
         </script>
         
     </body> 

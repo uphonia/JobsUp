@@ -4,9 +4,13 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 from django.core import serializers
 
-from .forms import SignUpForm, LogInForm, ProfileForm, MapRequestForm
+from .forms import SignUpForm, LogInForm, ProfileForm, MapRequestForm, ViewApplicationForm
 from .models import Company, Individual, Application
 
+from geopy.geocoders import Nominatim
+from geopy.distance import vincenty
+
+import geocoder
 import json
 from django.core import serializers
 
@@ -123,9 +127,12 @@ def edit_profile(request):
 	return redirect('/')
 
 def view_map(request):
+	freegeoip = "http://freegeoip.net/json"
 	if request.method == 'GET':
+		geolocator = Nominatim()
 		user = {}
 		comp = {}
+		r = 0
 		radius = ''
 		form = MapRequestForm(request.GET)
 		if form.is_valid():
@@ -140,9 +147,13 @@ def view_map(request):
 	company = []
 	length = 0
 	#company = serializers.serialize('json', comp)
+	current = geocoder.ip('me')
 	for c in comp:
-		company.insert(0, comp[length])
-		length = length+1
+		add = c.str_address + " " + c.city + ", " + c.state + " " + c.zipcode;
+		location = geocoder.google(add)
+		if vincenty(location.latlng, current.latlng).miles < int(r):
+			company.insert(0, c)
+			length = length+1
 	context = {'user': user, 'company': company, 'radius':radius}
 	#json_context = json.dumps(context)
 	return render(request, "Map.html", context)
@@ -166,5 +177,14 @@ def showCompanies(request):
 def showCompDetail(request, comp_id):
     companies = Company.objects.get(id=comp_id)
     return render_to_response('Map.html', {"companies": companies})
+
+def view_applicants(request):
+	if request.method == 'GET':
+		form = ViewApplicationForm(request.GET)
+		if form.is_valid():
+			applications = Company.objects.get(hashid = form.cleaned_data['hashid'])
+			applications.application_set.all()
+			print(applications)
+	return redirect('/')
     
     
