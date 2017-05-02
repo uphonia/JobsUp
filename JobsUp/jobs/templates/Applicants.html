@@ -40,6 +40,7 @@
     </head>
     
     <body>
+    {% csrf_token %}
         <!-- Top Navigation Bar -->
         <nav class="navbar navbar-default navbar-static-top navbar-inverse navbar-fixed-top"> 
 	        <div class="container">
@@ -51,7 +52,9 @@
 		                <a href="~/../CompanyProfiles.html"><span class="glyphicon glyphicon-user"></span> Company </a>
 		            </li>
 		            <li class="logout" style="text-align:right;">
-		                <button class="logout" type = "submit">Logout</button>
+		                <form class="logout" style = "padding-top:0px;" action = "/log_out" method = "GET">
+                        <input class = "logout" type = "submit" value = "Logout"><
+                    </form>
 		            </li>
 		        </ul>
 		    </div>
@@ -61,24 +64,21 @@
 	    <div class="container">
             <h1>Applicants</h1>
             <div class="panel panel-default" style="margin-left: -20px;">
-            <form action="/action_page.php" method="get" style="padding: 5px;">
                 <div class="panel-body" style="height: 480px; text-align: left; margin-top: -20px;">
-                    <h2>Example of how it would look like:</h2> 
-                    <p> Last Name, First Name <br>
-                        Email <br> 
-                        Address <br>
-                        Resume Link <br> </p>
-                    <a href="" class="button"> Send Notification </a> 
-                    <a href="" class="button" style="background-color: red"> Decline </a>  <br>
+                    {% for u in applicants %}
+                    <form action="/respond_to/" method="get" style="padding: 5px;">
+                    <input type="text" id="chashid" name="chashid" class="hidden" value={{company.hashid}}>
+                    <p> {{u.last_name}}, {{u.first_name}} <br>
+                        {{u.email}} <br> 
+                        {{u.str_address}} {{u.city}}, {{u.state}} {{u.zipcode}}<br>
+                        {{u.degree}}, {{u.phone_num}} <br> </p>
+                    <input type="text" id="ihashid" name="ihashid" class="hidden" value={{u.hashid}}>
+                    <input class="button" type = "submit" value = "Accept" name = "Accept">
+                    <input class="button" style="background-color: red" type = "submit" value = "Decline" name = "Decline">
                     <br> 
-                    <p> Last Name, First Name <br>
-                        Email <br> 
-                        Address <br>
-                        Resume Link <br> </p>
-                    <a href="" class="button"> Send Notification </a> 
-                    <a href="" class="button" style="background-color: red"> Decline </a> 
+                    </form>
+                    {% endfor %}
                 </div>
-            </form>
         </div>
         
     </body>

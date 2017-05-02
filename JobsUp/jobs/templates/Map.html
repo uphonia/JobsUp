@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
-    <style>
+    <head>
+        <title> Search | JobsUp </title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+            <style>
         .btn-searching{
             background-color: #4CAF50; /* Green */
             border: none;
@@ -50,28 +53,44 @@
         .logout {
             margin-top: 5px;
         }
+
+        .button {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 5px 15px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 12px;
+        }
     </style>
-    <head>
-        <title> Search | JobsUp </title>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     </head>
     
     <body>
+    {% csrf_token %}
         <!-- Top navigation bar -->
         <nav class="navbar navbar-default navbar-static-top navbar-inverse navbar-fixed-top"> 
 	        <div class="top_nav">
 	            <ul class="nav navbar-nav">
 	                <li class="home">
-		                <a href=""><span class=""></span> JobsUp </a>
+		                <a href="/"><span class=""></span> JobsUp </a>
                     </li> 
                     <li class="profile" style="margin-left:750px;">
-		                <a href="~/../UserProfiles.html"><span class="glyphicon glyphicon-user"></span> Employee </a>
-		            </li>  
-		            <li class="logout" style="text-align:right;">
-		              <form class="logout" style="padding-top:0px;" action = "/log_out" method = "GET">
-                        <button class="logout" type = "submit">Logout</button>
-                      </form> 
-		            </li> 
+                    <form class="refresh" style = "padding-top:13px;" action = "/view_profile/" method = "GET">
+                        <input type="text" id="hashid" name="hashid" class="hidden" value={{user.hashid}}>
+                        <span class="glyphicon glyphicon-user"></span>
+                        <input class = "button" type = "submit" value = "Employee">
+                    </form>
+                    </li>
+                    <li style = "margin-left:5px">
+                    <form class="logout" style = " padding-top:8px; padding-left:10px;" action = "/log_out" method = "GET">
+                        <input class = "button" type = "submit" value = "Logout" style = " "">
+                    </form> 
+                    </li>
 		        </ul>
 		    </div>
 	    </nav>
@@ -297,8 +316,8 @@
                                         close = false;
                                     }
                                     if(close == true){
-                                        var conString = "<div><p>{{c.company_name}} <br>" + "{{c.str_address}}" + " {{c.city}}, " + "{{c.state}} " + "{{c.zipcode}}" + "</p>" + 
-                                            "<form action = '/sub_app/' method = 'post'><input class='button' value = 'Submit Application' type = 'submit'>" + "</div>";
+                                        var conString = "<div><p>{{c.company_name}} <br>" + "{{c.str_address}}" + " {{c.city}}, " + "{{c.state}} " + "{{c.zipcode}}" + "</p>" + "<br> {{c.job_post}} <br>" + 
+                                            "<form action = '/sub_app/' method = 'get'> <input type='text' id='ihashid' name='ihashid' class='hidden' value={{user.hashid}}><input type='text' id='chashid' name='chashid' class='hidden' value={{c.hashid}}><input class='button' value = 'Submit Application' type = 'submit'>" + "</div>";
                                         var marker = new google.maps.Marker({
                                             map: map,
                                             position: results[0].geometry.location,

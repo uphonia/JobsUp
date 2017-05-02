@@ -3,6 +3,7 @@ from django.shortcuts import redirect
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 from django.core import serializers
+from django.core.mail import send_mail
 
 from .forms import SignUpForm, LogInForm, ProfileForm, MapRequestForm, ViewApplicationForm
 from .models import Company, Individual, Application
@@ -126,6 +127,13 @@ def edit_profile(request):
 			return render(request, template, {'user':u})
 	return redirect('/')
 
+def post_job(request):
+	if request.method == 'POST':
+		company = Company.objects.get(hashid = request.POST.get("hashid", ""))
+		company.job_post = request.POST.get("job", "")
+		company.save()
+	return render(request,'CompanyProfiles.html', {'user': company})
+
 def view_map(request):
 	freegeoip = "http://freegeoip.net/json"
 	if request.method == 'GET':
@@ -151,8 +159,8 @@ def view_map(request):
 	for c in comp:
 		add = c.str_address + " " + c.city + ", " + c.state + " " + c.zipcode;
 		location = geocoder.google(add)
-		if vincenty(location.latlng, current.latlng).miles < int(r):
-			company.insert(0, c)
+		if vincenty(location.latlng, current.latlng).miles < int(r) and c.job_post != "":
+			company.insert(length, c)
 			length = length+1
 	context = {'user': user, 'company': company, 'radius':radius}
 	#json_context = json.dumps(context)
@@ -162,13 +170,20 @@ def view_map(request):
 def view_profile(request):
     if request.method == 'GET':
         user = {}
-        form = ProfileForm(request.GET)
-        if form.is_valid():
-            user = Individual.objects.filter(hashid = form.cleaned_data['hashid'])
-            user = user[0]
+        user = Individual.objects.filter(hashid = request.GET.get("hashid"))
+        user = user[0]
             
     context = {'user': user}
     return render(request, "UserProfiles.html", context)
+
+def view_c_profile(request):
+    if request.method == 'GET':
+        user = {}
+        user = Company.objects.filter(hashid = request.GET.get("hashid"))
+        user = user[0]
+            
+    context = {'user': user}
+    return render(request, "CompanyProfiles.html", context)
     
 def showCompanies(request):
     companies = Company.objects.all()
@@ -178,13 +193,54 @@ def showCompDetail(request, comp_id):
     companies = Company.objects.get(id=comp_id)
     return render_to_response('Map.html', {"companies": companies})
 
+def submit_application(request):
+	j = {}
+	if request.method == 'GET':
+		job_real = {}
+		user = Individual.objects.get(hashid = request.GET.get("ihashid", ""))
+		comp = Company.objects.get(hashid = request.GET.get("chashid", ""))
+		job_real['applicant'] = user
+		job_real['company'] = comp
+		query = Application.objects.filter(applicant = user, company = comp)
+		if len(query) == 0:
+			j = Application(** job_real)
+			j.save()
+	return render(request, 'UserProfiles.html', {'user':user})
+
 def view_applicants(request):
+	applicants = []
+	length = 0
+	context = {}
 	if request.method == 'GET':
 		form = ViewApplicationForm(request.GET)
 		if form.is_valid():
-			applications = Company.objects.get(hashid = form.cleaned_data['hashid'])
-			applications.application_set.all()
-			print(applications)
-	return redirect('/')
+			comp = Company.objects.get(hashid = form.cleaned_data['hashid'])
+			applications = Application.objects.filter(company = comp)
+			for a in applications:
+				u = Individual.objects.get(hashid = a.applicant.hashid)
+				applicants.insert(length, u)
+				length = length+1
+			context = {'company':comp, 'applicants':applicants}
+	return render(request, 'Applicants.html', context)
     
-    
+def company_response(request):
+	applicants = []
+	comp = {}
+	length = 0
+	context = {}
+	if request.method == 'GET':
+		comp = Company.objects.get(hashid = request.GET.get("chashid"))
+		applicant = Individual.objects.get(hashid = request.GET.get("ihashid"))
+		application = Application.objects.get(company = comp, applicant = applicant)
+		application.delete()
+		if 'Accept' in request.GET:
+			send_mail('Application Accepted', comp.company_name + ' has accepted your application', 'tier3tier@gmail.com', [applicant.email], fail_silently = False,)
+		elif 'Decline' in request.GET:
+			send_mail('Application Denied', comp.company_name + ' has declined your application', 'tier3tier@gmail.com', [applicant.email], fail_silently = False,)
+		applications = Application.objects.filter(company = comp)
+		for a in applications:
+			u = Individual.objects.get(hashid = a.applicant.hashid)
+			applicants.insert(length, u)
+			length = length+1
+		context = {'company':comp, 'applicants':applicants}
+	return render(request, 'Applicants.html', context)

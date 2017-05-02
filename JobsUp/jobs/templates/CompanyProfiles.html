@@ -43,11 +43,15 @@
 		                <a href=""><span class=""></span> JobsUp</a>
                     </li>
 		            <li class="profile" style="margin-left:750px;">
-		                <a href="/"><span class="glyphicon glyphicon-user"></span> Company </a>
-		            </li>
-                    <li>
-		            <form class="logout" style="padding-top:13px;" action = "/log_out" method = "GET">
-                        <button class="logout" type = "submit">Logout</button>
+		              <form class="refresh" style = "padding-top:13px;" action = "/view_c_profile/" method = "GET">
+                        <input type="text" id="hashid" name="hashid" class="hidden" value={{user.hashid}}>
+                        <span class="glyphicon glyphicon-user"></span>
+                        <input class = "button" type = "submit" value = "Company">
+                    </form>
+                    </li>
+                    <li style = "margin-left:5px">
+                    <form class="logout" style = " padding-top:13px; padding-left:10px;" action = "/log_out" method = "GET">
+                        <input class = "button" type = "submit" value = "Logout" style = " "">
                     </form> 
                     </li>
 		        </ul>
@@ -104,6 +108,15 @@
                             <input type="text" id="hashid" name="hashid" class="hidden" value={{user.hashid}}>
                             <input class="button" value = "View Applicants" type = "submit">
                         </form>
+
+                        <br>
+                        <form action = "/post_job/"" method = "post">
+                        {% csrf_token %}
+                            <input type="text" id="hashid" name="hashid" class="hidden" value={{user.hashid}}>
+                            <input type="text" id="job" name="job" value = "{{user.job_post}}" style = "width:400px;"><br>
+                            <input class="button" value = "Post Job" type = "submit">
+                        </form>
+
                     </div> <!-- End of right -->
                 </div> 
                                 

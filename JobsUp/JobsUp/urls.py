@@ -28,6 +28,11 @@ urlpatterns = [
 	url(r'^edit_profile/$', jobs.views.edit_profile, name = 'edit'),
 	url(r'^view_map/$', jobs.views.view_map, name = 'mapview'),
     url(r'^view_profile/$', jobs.views.view_profile, name = 'profile'),
+    url(r'^post_job/$', jobs.views.post_job, name = 'jobs'),
     url(r'^applicants/$', jobs.views.view_applicants, name = 'applicants'),
+    url(r'^sub_app/$', jobs.views.submit_application, name = 'submit_app'),
+    url(r'^respond_to/$', jobs.views.company_response, name = 'response'),
+    url(r'^view_profile/$', jobs.views.view_profile, name = 'view'),
+    url(r'^view_c_profile/$', jobs.views.view_c_profile, name = 'viewc'),
     url(r'^admin/', admin.site.urls),
 ]
