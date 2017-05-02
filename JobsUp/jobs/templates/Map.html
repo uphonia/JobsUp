@@ -233,38 +233,21 @@
             {% endfor %}
             //console.log({{company}});
             var radius = "{{radius|safe}}";
-            var map, infoWindow;
+            var map, infoWindow, infowindow;
+            var information = [];
             var markers = [];
             var content = [];
             var locationSelect;
             
             function initMap() {
                 console.log(radius);
-                //console.log(companies[0].name);
-                /*for (var i = 0; i < companies.length;i++){
-                    console.log(companies[i].str_address);
-
-                }*/
                 var newyork = {lat: 40.7128, lng: -74.0059};
                 map = new google.maps.Map(document.getElementById('map'), {
                   zoom: 15,
                   center: newyork
                 });
                 
-                infoWindow = new google.maps.InfoWindow;
-                
-                /*locationSelect = document.getElementById("locationSelect");
-                locationSelect.onchange = function() {
-                    var markerNum = locationSelect.options[locationSelect.selectedIndex].value;
-                    if (markerNum != "none") {
-                        google.maps.event.trigger(markers[markerNum], 'click');
-                    }
-                };*/
-            
-                var marker = new google.maps.Marker({
-                  position: newyork,
-                  map: map
-                });
+                var marker;
 
                 if(navigator.geolocation){
                     navigator.geolocation.getCurrentPosition(function(position){
@@ -273,36 +256,70 @@
                             lng: position.coords.longitude
                         };
 
-                        infoWindow.setPosition(pos);
-                        infoWindow.setContent('You are here');
+                        infowindow = new google.maps.InfoWindow({ });
+
+                        infowindow.setPosition(pos);
+                        var contentString = "You are here";
+                        infowindow.setContent('You are here');
                         marker = new google.maps.Marker({
                             position: pos,
-                            map: map
+                            map: map,
+                            info: contentString
                         });
-                        infoWindow.open(map);
+
+                        marker.addListener('mouseover', function(){
+                            infowindow.setContent(marker.info);
+                            infowindow.setPosition(marker.position);
+                            infowindow.open(map, marker);
+                        });
+                        marker.addListener('mouseout', function(){
+                            infowindow.close();
+                        });
+
+                        markers.push(marker);
+
+                        var close = true;
+                        {% for c in company %}
+                            var add = "{{c.address}}" + " {{c.city}}, " + "{{c.state}} " + "{{c.zipcode}}";
+                            var geocoder = new google.maps.Geocoder();
+                            geocoder.geocode({address: add}, function(results, status) {
+                                if (status == google.maps.GeocoderStatus.OK) {
+                                //close = searchLocationsNear(results[0].geometry.location);
+                                    if(close == true){
+                                        var conString = "<p>{{c.company_name}}</p>";
+                                        var marker = new google.maps.Marker({
+                                            map: map,
+                                            position: results[0].geometry.location,
+                                            info: conString
+                                        });
+                                        content.push(conString);
+
+                                        marker.addListener('mouseover', function(){
+                                            infowindow.setContent(marker.info);
+                                            infowindow.setPosition(marker.position);
+                                            infowindow.open(map, marker);
+                                        });
+                                        marker.addListener('mouseout', function(){
+                                            infowindow.close();
+                                        });
+                                        markers.push(marker);
+                                    }
+                                } else {
+                                    alert(address + ' not found, Geocode was not successful');
+                                    close = false;
+                                }
+                            });
+                        {% endfor %}
+
+                        infowindow.open(map);
                         map.setCenter(pos);
                     }, function(){
-                        handelLocationError(true, infoWindow, map.getCenter());
+                        handleLocationError(true, infoWindow, map.getCenter());
                     });
                 } else{
                     handleLocationError(false, infoWindow, map.getCenter());
                 }
-                
-                var infowindow = new google.maps.InfoWindow({
-                    //content: contentString
-                });
             
-                
-            
-                marker.addListener('mouseover', function() {
-                    infowindow.open(map, marker);
-                });
-            
-                marker.addListener('mouseout', function() {
-                    infowindow.close();
-                });
-                
-                //google.maps.event.addListenerOnce(map, 'tilesLoaded', addMarkers);
             }
             
             function handleLocationError(browserHasGeolocation, infoWindow, pos){
@@ -311,24 +328,6 @@
                     'Error: Service Failed.' :
                     'Error: Browser does not support geolocation.');
                 infoWindow.open(map);
-            }
-            
-            // change IDs/variable names, to match form stuff
-            function searchLocations() {
-                /*
-                var zipcode = document.getElementById("zipcode").value;
-                var geocoder = new google.maps.Geocoder();
-                geocoder.geocode({address: address}, function(results, status) {
-                    if (status == google.maps.GeocoderStatus.OK) {
-                        searchLocationsNear(results[0].geometry.location);
-                    } else {
-                        alert(zipcode + ' not found');
-                    }
-                });
-                */
-                
-                
-                
             }
             
             function clearLocations() {
@@ -354,35 +353,40 @@
             }*/
             
             // in theory, goes through all the companies and puts markers for all of them 
-            /*function addMarkers() {
-                var close = false;
+            function addMarkers() {
+                var close = true;
                  {% for c in company %}
-                    //close = false;
                     var add = "{{c.address}}" + " {{c.city}}, " + "{{c.state}} " + "{{c.zipcode}}";
                     var geocoder = new google.maps.Geocoder();
                     geocoder.geocode({address: add}, function(results, status) {
                     if (status == google.maps.GeocoderStatus.OK) {
-                        close = searchLocationsNear(results[0].geometry.location);
+                        //close = searchLocationsNear(results[0].geometry.location);
+                        if(close == true){
+                            console.log(results[0].geometry.location);
+                            console.log(add);
+                            var marker = new google.maps.Marker({
+                                map: map,
+                                position: results[0].geometry.location
+                            });
+                            var contentString = "<p>{{c.company_name}}</p>";
+                            content.push(contentString);
+                            markers.push(marker);
+                            markers[markers.length-1].addListener('mouseover', function() {
+                                infowindow.setContent(content[markers.length-1])
+                                infowindow.open(map, markers[markers.length-1]);
+                            });
+
+                            markers[markers.length-1].addListener('mouseout', function() {
+                                infowindow.close();
+                            });
+                        }
                     } else {
-                        alert(address + ' not found');
+                        alert(address + ' not found, Geocode was not successful');
                         close = false;
                     }
-                    if(close == true){
-                        var point = new google.maps.LatLng({{mark.position.latitude}},{{mark.position.longitude}});
-                            var marker = new google.maps.Marker({
-                            position: point,
-                            map: map,
-                        });
-                    
-                        marker['infowindow'] = new google.maps.InfoWindow({
-                            content: "this is a company marker",
-                        })
-                    
-                        markers.push(mark);
-                    }
+                });
                 {% endfor %}
-            }*/
-                
+        }
         </script>
         
         <!-- Using Google Maps API --> 
