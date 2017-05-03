@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>JobsUp: Log In or Sign Up</title>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+		<link rel = "stylesheet" href = "/static/stuff.css">
+
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+	</head>
+	<body>
+	    <!-- Top Navigation Bar -->
+	    <nav class="navbar navbar-default navbar-static-top navbar-inverse navbar-fixed-top"> 
+	        <div class="container">
+	            <ul class="nav navbar-nav">
+	                <div class="col-lg-1">
+                        <li class="home">
+                            <a href="/"  style="color: gray;"><span class=""></span> JobsUp</a>
+                        </li>
+                    </div>
+                    {% csrf_token %}
+                    <div class="col-lg-11"> 
+                        <div style = "display: inline-block; margin-left: 610px;" >
+                            <form action = "log_in/" method = "GET" style = "padding-top:10px;">
+                            <!--<li class="username-login">style = "padding-top:13px; margin-left:580px; "-->
+                                <input name = "username" type="text" placeholder="Username" style = "">
+                        
+                                <!--<input name = "email" type="text" placeholder="Email">-->
+                            <!--</li>-->
+                            <!--<li class="password-login">style="padding-top:13px; margin-left:20px;"" -->
+                   
+                                <input name = "password" type="text" placeholder="Password" style = "">
+                       
+                            <!--</li>-->
+                            <button class="login" type = "submit">Log In</button>
+                    
+                            </form>  
+                        </div>    
+                    </div>     
+		        </ul>
+		    </div>
+	    </nav>
+	    
+        <!-- Panel for Sign Up Form -->
+        <div class="panel panel-primary panel-transparent">
+            <!-- Body of panel -->
+            <div class="panel-body">
+                <h1> Welcome to JobsUp, <br> an interactive map of <br> open positions in your area! </h1>
+                <!-- Sign Up Form -->
+                <div class="account"> 
+                    <form action="sign_up/" method = "POST">
+                    	{% csrf_token %}
+                    	<label for="fname"> Username </label> <br> 
+                        <input type="text" id="username" name = "username"><br>
+
+                        <label for="fname"> First Name </label> <br> 
+                        <input type="text" id="first_name" name = "first_name"><br>
+            
+                        <label for="lname"> Last Name </label> <br>
+                        <input type="text" id="last_name" name = last_name><br>
+            
+                        <label for="email"> Email </label> <br> 
+                        <input type="email" id="email" name = "email"><br>
+            
+                        <label for="pwd"> Password </label> <br> 
+                        <input type="text" id="password" name = "password"><br> 
+
+                        <!--<label for="pwd"> Confirm Password </label> <br> 
+                        <input type="text" id="password2" name = "password2"><br>-->
+
+                        <label for="personnel"> Personnel </label> <br>
+                        <select class="btn btn-default dropdown-toggle" id="radius" data-toggle="dropdown" style="text-align: left" name = personnel>
+                            <option></option>
+                            <option> Employee</option>
+                            <option> Company</option>
+                        </select> <br>
+
+                        <input type="submit" class = "button" value="Sign Up">
+                    </form>
+                </div>
+    
+                <!--<div class="user">
+                    <form action="/action_page.php" method="GET">
+                        <input type="checkbox" name="user"> Employee <br> 
+                        <input type="checkbox" name="user"> Company <br>
+                    </form>
+                </div>
+                
+                <a href="" class="button"> Sign Up </a>  -->
+                
+            </div>
+        </div>
+    </body>
+</html>
