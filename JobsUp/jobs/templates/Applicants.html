@@ -48,12 +48,16 @@
 	                <li class="home">
 		                <a href=""><span class=""></span> JobsUp</a>
                     </li>
-		            <li class="profile" style="margin-left:800px;">
-		                <a href="~/../CompanyProfiles.html"><span class="glyphicon glyphicon-user"></span> Company </a>
+		            <li class="profile" style="margin-left:750px;">
+		               <form class="refresh" style = "padding-top:13px;" action = "/view_c_profile/" method = "GET">
+                        <input type="text" id="hashid" name="hashid" class="hidden" value={{company.hashid}}>
+                        <span class="glyphicon glyphicon-user"></span>
+                        <input class = "button" type = "submit" value = "Company">
+                    </form>
 		            </li>
 		            <li class="logout" style="text-align:right;">
 		                <form class="logout" style = "padding-top:0px;" action = "/log_out" method = "GET">
-                        <input class = "logout" type = "submit" value = "Logout"><
+                        <input class = "button" type = "submit" value = "Logout"><
                     </form>
 		            </li>
 		        </ul>
