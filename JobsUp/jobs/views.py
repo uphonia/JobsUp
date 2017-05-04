@@ -45,7 +45,7 @@ def sign_up(request):
 			elif form.cleaned_data['personnel'] == 'Employee':
 				user['hashid'] = str(len(user['username'] + user['password'])) + str(user['username'] + user['password'])
 				template = 'UserProfiles.html'
-				query = User.objects.filter(hashid = user['hashid'])
+				query = Individual.objects.filter(hashid = user['hashid'])
 				if len(query) == 0:
 					u = Individual(** user)
 					u.save()
@@ -158,8 +158,9 @@ def view_map(request):
 	current = geocoder.ip('me')
 	for c in comp:
 		add = c.str_address + " " + c.city + ", " + c.state + " " + c.zipcode;
+		print(add)
 		location = geocoder.google(add)
-		if vincenty(location.latlng, current.latlng).miles < int(r) and c.job_post != "":
+		if vincenty(location.latlng, current.latlng).miles < int(radius) and c.job_post != "":
 			company.insert(length, c)
 			length = length+1
 	context = {'user': user, 'company': company, 'radius':radius}
