@@ -3,8 +3,6 @@ from __future__ import unicode_literals
 from django.db import models
 from geoposition.fields import GeopositionField
 
-# Create your models here.
-
 class Individual(models.Model):
 	username = models.CharField(max_length = 200, null = True)
 	first_name = models.CharField(max_length = 200, null = True)

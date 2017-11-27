@@ -1,6 +1,5 @@
 from django import forms
 
-
 class SignUpForm(forms.Form):
 	username = forms.CharField(max_length = 200, required = True)
 	first_name = forms.CharField(max_length = 200, required = True)
